@@ -130,7 +130,6 @@ jQuery( document ).ready(function( $ ) {
                             'Close': function() {
 								$('#tblWarningList tbody').empty();
 								$('#warningHistory').hide();
-								$('#warningListStationID').val('');
                                 $(this).dialog('close');
                                 return false; 
                             }
@@ -451,10 +450,7 @@ jQuery( document ).ready(function( $ ) {
 				
 				// update dialog title
 				dialog.dialog('option', 'title', '<?php echo JText::_('COM_BTS_TITLE_STATION_DETAILS'); ?>: ' + marker.bts_name + ' ' + marker.network + ' - <?php echo JText::_('COM_BTS_TITLE_WARNING_LIST'); ?>');
-				
-				// set ID for current station
-				$('#warningListStationID').val(marker.bts_id);
-				
+								
 				// add Back button
 				if ($('#btnBackWarningList').length==0) {
 					var btnBack = $('<button/>', {
@@ -511,7 +507,7 @@ jQuery( document ).ready(function( $ ) {
 							var tdID = $('<td/>', {text: item.id});
 							var tdLevel = $('<td/>', {html: '<span class="warning'+item.level+'">'+warningLevelText[item.level]+'</span>'});
 							var tdDesc = $('<td/>', {text: item.warning_description});
-							var tdMtState = $('<td/>', {html: btsHelper.warningStateCb('maintenance_state-'+item.id, item.maintenance_state, <?php echo $canMaintenance; ?>)});
+							var tdMtState = $('<td/>', {html: btsHelper.warningStateCb(item.id, item.maintenance_state, <?php echo $canMaintenance; ?>)});
 							var tdMtBy = $('<td/>', {text: item.maintenance_by});
 							var tdMtTime = $('<td/>', {text: item.maintenance_time});
 							var tdApBy = $('<td/>', {text: item.approve_by});
@@ -554,7 +550,7 @@ jQuery( document ).ready(function( $ ) {
 			var cb =  $('<select/>', {
 				name: name
 			});
-			if (permission == 1) cb.attr('disabled','disabled');
+			if (permission == 0) cb.attr('disabled','disabled');
 			
 			var warningStateData = [
 				{value: 0, text: 'Chưa sửa chữa'},
@@ -790,7 +786,6 @@ jQuery( document ).ready(function( $ ) {
 					
 				</tbody>
 			</table>
-			<input type="hidden" name="station_id" id="warningListStationID" />
 		</form>
 	</div>
 	

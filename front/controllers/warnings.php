@@ -35,28 +35,39 @@ class BtsControllerWarnings extends BtsController
 		// Initialise variables.
 		$app	= JFactory::getApplication();
 		$model = $this->getModel('Station', 'BtsModel');
+		$user = JFactory::getUser();
 		
-		if ($_POST['station_id']) {
-			$station_id = $_POST['station_id'];
-			unset($_POST['station_id']);
-			
-			// get current state
-			$db = JFactory::getDbo();
-			$query = "SELECT * FROM #__bts_warning WHERE station_id = ".$station_id;
-			$db->setQuery($query);
-			$warnings = $db->loadObjectList();
-			
-			$original = array();
-			foreach ($warnings as $warning) {
-				$original[$warning->id]['maintenance_state'] = $warning->maintenance_state;
-				$changes[$parts[1]][] = $parts[0];
-			}
-			
-			// check change
-			$changes = array();
+		if ($user->id && count($_POST)) {
 			foreach ($_POST as $key => $value) {
-				$parts = explode('-', $key);
-				$changes[$parts[1]][] = $parts[0];
+			
+				// check if value changed
+			
+				$row = array();
+				$row['id'] = $key;
+				$row['maintenance_state'] = $value;
+				$row['approve_state'] = 0;
+				if ($row['maintenance_state']==2) {
+					$row['approve_state'] = 1;
+					$row['approve_by'] = $user->id;
+					$row['approve_time'] = date('Y-m-d H:i:s');
+				} else {
+					$row['approve_state'] = 0;
+					$row['maintenance_by'] = $user->id;
+					$row['maintenance_time'] = date('Y-m-d H:i:s');
+				}
+				
+				$rowWarning = JTable::getInstance('warning', 'BtsTable');
+				
+				if (!$rowWarning->bind($row)) {
+					$this->setError($rowWarning->getError());
+					return false;
+				}
+				
+				if (!$rowWarning->store()) {
+					$this->setError($rowWarning->getError());
+					return false;
+				}
+				
 			}
 		}
 		
