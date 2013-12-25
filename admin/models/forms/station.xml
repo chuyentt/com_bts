@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset>
+
+              <field name="id" type="text" default="0" label="COM_BTS_FORM_LBL_STATION_ID"
+            readonly="true" class="readonly"
+            description="JGLOBAL_FIELD_ID_DESC" /> 
+
+       <field name="created_by" type="createdby" default="" 
+            label="COM_BTS_FORM_LBL_STATION_CREATED_BY"
+            description="COM_BTS_FORM_DESC_STATION_CREATED_BY"  /> 
+
+       <field name="bts_name" type="text"
+                
+            label="COM_BTS_FORM_LBL_STATION_BTS_NAME"
+            description="COM_BTS_FORM_DESC_STATION_BTS_NAME" 
+                
+                
+                
+            filter="string"
+            size="20"
+            maxlength="20" /> 
+
+       <field name="network" type="text"
+                
+            label="COM_BTS_FORM_LBL_STATION_NETWORK"
+            description="COM_BTS_FORM_DESC_STATION_NETWORK" 
+                
+                
+                
+            filter="string"
+            size="20"
+            maxlength="20" /> 
+
+       <field name="address" type="text"
+                
+            label="COM_BTS_FORM_LBL_STATION_ADDRESS"
+            description="COM_BTS_FORM_DESC_STATION_ADDRESS" 
+                
+                
+                
+            filter="raw" /> 
+
+       <field name="latitude" type="text" size="40" class="inputbox"
+        
+            label="COM_BTS_FORM_LBL_STATION_LATITUDE"
+            description="COM_BTS_FORM_DESC_STATION_LATITUDE" 
+        
+        
+        
+        filter="safehtml" /> 
+
+       <field name="longitude" type="text" size="40" class="inputbox"
+        
+            label="COM_BTS_FORM_LBL_STATION_LONGITUDE"
+            description="COM_BTS_FORM_DESC_STATION_LONGITUDE" 
+        
+        
+        
+        filter="safehtml" /> 
+
+       <field name="province_id" type="text"
+                
+            label="COM_BTS_FORM_LBL_STATION_PROVINCE_ID"
+            description="COM_BTS_FORM_DESC_STATION_PROVINCE_ID" 
+                
+                
+                
+            filter="raw" /> 
+
+       <field name="province" type="text"
+                
+            label="COM_BTS_FORM_LBL_STATION_PROVINCE"
+            description="COM_BTS_FORM_DESC_STATION_PROVINCE" 
+                
+                
+                
+            filter="raw" /> 
+
+       <field name="district" type="text"
+                
+            label="COM_BTS_FORM_LBL_STATION_DISTRICT"
+            description="COM_BTS_FORM_DESC_STATION_DISTRICT" 
+                
+                
+                 /> 
+
+       <field name="commune" type="text"
+                
+            label="COM_BTS_FORM_LBL_STATION_COMMUNE"
+            description="COM_BTS_FORM_DESC_STATION_COMMUNE" 
+                
+                
+                
+            filter="raw" /> 
+
+       <field name="mscmss" type="text"
+                
+            label="COM_BTS_FORM_LBL_STATION_MSCMSS"
+            description="COM_BTS_FORM_DESC_STATION_MSCMSS" 
+                
+                
+                 /> 
+
+       <field name="bsc_name" type="text"
+                
+            label="COM_BTS_FORM_LBL_STATION_BSC_NAME"
+            description="COM_BTS_FORM_DESC_STATION_BSC_NAME" 
+                
+                
+                 /> 
+
+       <field name="trautc" type="text"
+                
+            label="COM_BTS_FORM_LBL_STATION_TRAUTC"
+            description="COM_BTS_FORM_DESC_STATION_TRAUTC" 
+                
+                
+                 /> 
+
+       <field name="pcumfs" type="text"
+                
+            label="COM_BTS_FORM_LBL_STATION_PCUMFS"
+            description="COM_BTS_FORM_DESC_STATION_PCUMFS" 
+                
+                
+                 /> 
+
+       <field name="station_code" type="text"
+                
+            label="COM_BTS_FORM_LBL_STATION_STATION_CODE"
+            description="COM_BTS_FORM_DESC_STATION_STATION_CODE" 
+                
+                
+                 /> 
+
+       <field name="co_site" type="text"
+                
+            label="COM_BTS_FORM_LBL_STATION_CO_SITE"
+            description="COM_BTS_FORM_DESC_STATION_CO_SITE" 
+                
+                
+                 /> 
+
+       <field name="localnumber" type="text"
+                
+            label="COM_BTS_FORM_LBL_STATION_LOCALNUMBER"
+            description="COM_BTS_FORM_DESC_STATION_LOCALNUMBER" 
+                
+                
+                 /> 
+
+       <field name="activitydate" type="calendar" class="inputbox"
+        
+        
+         default="0000-00-00 00:00:00" 
+        
+            label="COM_BTS_FORM_LBL_STATION_ACTIVITYDATE"
+            description="COM_BTS_FORM_DESC_STATION_ACTIVITYDATE" 
+        format="%Y-%m-%d %H:%M:%S"
+        filter="safehtml" /> 
+
+       <field name="activitystatus" type="text"
+                
+            label="COM_BTS_FORM_LBL_STATION_ACTIVITYSTATUS"
+            description="COM_BTS_FORM_DESC_STATION_ACTIVITYSTATUS" 
+                
+                
+                 /> 
+
+       <field name="site_id" type="text"
+                
+            label="COM_BTS_FORM_LBL_STATION_SITE_ID"
+            description="COM_BTS_FORM_DESC_STATION_SITE_ID" 
+                
+                
+                 /> 
+
+       <field name="lac" type="text"
+                
+            label="COM_BTS_FORM_LBL_STATION_LAC"
+            description="COM_BTS_FORM_DESC_STATION_LAC" 
+                
+                
+                 /> 
+
+       <field name="devicetype" type="text"
+                
+            label="COM_BTS_FORM_LBL_STATION_DEVICETYPE"
+            description="COM_BTS_FORM_DESC_STATION_DEVICETYPE" 
+                
+                
+                
+            filter="raw" /> 
+
+       <field name="stationtype" type="text"
+                
+            label="COM_BTS_FORM_LBL_STATION_STATIONTYPE"
+            description="COM_BTS_FORM_DESC_STATION_STATIONTYPE" 
+                
+                
+                 /> 
+
+       <field name="configuration" type="text"
+                
+            label="COM_BTS_FORM_LBL_STATION_CONFIGURATION"
+            description="COM_BTS_FORM_DESC_STATION_CONFIGURATION" 
+                
+                
+                 /> 
+
+       <field name="combine" type="text"
+                
+            label="COM_BTS_FORM_LBL_STATION_COMBINE"
+            description="COM_BTS_FORM_DESC_STATION_COMBINE" 
+                
+                
+                 /> 
+
+       <field name="typestation" type="text"
+                
+            label="COM_BTS_FORM_LBL_STATION_TYPESTATION"
+            description="COM_BTS_FORM_DESC_STATION_TYPESTATION" 
+                
+                
+                 /> 
+
+       <field name="indoormaintenance" type="calendar" class="inputbox"
+        
+        
+         default="0000-00-00 00:00:00" 
+        
+            label="COM_BTS_FORM_LBL_STATION_INDOORMAINTENANCE"
+            description="COM_BTS_FORM_DESC_STATION_INDOORMAINTENANCE" 
+        format="%Y-%m-%d %H:%M:%S"
+        filter="safehtml" /> 
+
+       <field name="outdoormaintenance" type="calendar" class="inputbox"
+        
+        
+         default="0000-00-00 00:00:00" 
+        
+            label="COM_BTS_FORM_LBL_STATION_OUTDOORMAINTENANCE"
+            description="COM_BTS_FORM_DESC_STATION_OUTDOORMAINTENANCE" 
+        format="%Y-%m-%d %H:%M:%S"
+        filter="safehtml" /> 
+
+       <field name="maintenanceby" type="text"
+                
+            label="COM_BTS_FORM_LBL_STATION_MAINTENANCEBY"
+            description="COM_BTS_FORM_DESC_STATION_MAINTENANCEBY" 
+                
+                
+                
+            filter="raw" /> 
+
+       <field name="manager" type="text"
+                
+            label="COM_BTS_FORM_LBL_STATION_MANAGER"
+            description="COM_BTS_FORM_DESC_STATION_MANAGER" 
+                
+                
+                 /> 
+
+       <field name="mobile" type="text"
+                
+            label="COM_BTS_FORM_LBL_STATION_MOBILE"
+            description="COM_BTS_FORM_DESC_STATION_MOBILE" 
+                
+                
+                 /> 
+
+       <field name="project" type="text"
+                
+            label="COM_BTS_FORM_LBL_STATION_PROJECT"
+            description="COM_BTS_FORM_DESC_STATION_PROJECT" 
+                
+                
+                 /> 
+
+       <field name="caremanagement" type="text"
+                
+            label="COM_BTS_FORM_LBL_STATION_CAREMANAGEMENT"
+            description="COM_BTS_FORM_DESC_STATION_CAREMANAGEMENT" 
+                
+                
+                 /> 
+
+       <field name="backlog" type="text"
+                
+            label="COM_BTS_FORM_LBL_STATION_BACKLOG"
+            description="COM_BTS_FORM_DESC_STATION_BACKLOG" 
+                
+                
+                 /> 
+
+       <field name="note" type="textarea"
+                
+            label="COM_BTS_FORM_LBL_STATION_NOTE"
+            description="COM_BTS_FORM_DESC_STATION_NOTE" 
+                
+                
+                
+            cols="100"
+            rows="8" /> 
+
+         <field
+        name="state"
+        type="list"
+        label="JSTATUS"
+        description="JFIELD_PUBLISHED_DESC"
+        class="inputbox"
+        size="1"
+        default="1">
+        <option value="1">JPUBLISHED</option>
+        <option value="0">JUNPUBLISHED</option>
+    </field> 
+
+                        <field name="checked_out" type="hidden" filter="unset" />
+        <field name="checked_out_time" type="hidden" filter="unset" />
+
+	</fieldset>
+
+</form>
