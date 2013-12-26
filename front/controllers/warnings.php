@@ -36,38 +36,48 @@ class BtsControllerWarnings extends BtsController
 		$app	= JFactory::getApplication();
 		$model = $this->getModel('Station', 'BtsModel');
 		$user = JFactory::getUser();
+		$db = JFactory::getDbo();
 		
-		if ($user->id && count($_POST)) {
+		if ($user->id && count($_POST) && isset($_POST['station_id'])) {
+		
+			$query = "SELECT id, maintenance_state, approve_state FROM #__bts_warning WHERE `station_id` = ".$_POST['station_id'];
+			$db->setQuery($query);
+			$warnings = $db->loadObjectList();
+			
+			$originalVal = array();
+			foreach ($warnings as $w) {
+				$originalVal[$w->id] = $w->maintenance_state;
+			}
+			unset($_POST['station_id']);
 			foreach ($_POST as $key => $value) {
-			
 				// check if value changed
-			
-				$row = array();
-				$row['id'] = $key;
-				$row['maintenance_state'] = $value;
-				$row['approve_state'] = 0;
-				if ($row['maintenance_state']==2) {
-					$row['approve_state'] = 1;
-					$row['approve_by'] = $user->id;
-					$row['approve_time'] = date('Y-m-d H:i:s');
-				} else {
+				if ($originalVal[$key] != $value) {
+					$row = array();
+					$row['id'] = $key;
+					$row['maintenance_state'] = $value;
 					$row['approve_state'] = 0;
-					$row['maintenance_by'] = $user->id;
-					$row['maintenance_time'] = date('Y-m-d H:i:s');
+					if ($row['maintenance_state']==2) {
+						$row['approve_state'] = 1;
+						$row['approve_by'] = $user->id;
+						$row['approve_time'] = date('Y-m-d H:i:s');
+					} else {
+						$row['approve_state'] = 0;
+						$row['maintenance_by'] = $user->id;
+						$row['maintenance_time'] = date('Y-m-d H:i:s');
+					}
+					
+					$rowWarning = JTable::getInstance('warning', 'BtsTable');
+					
+					if (!$rowWarning->bind($row)) {
+						$this->setError($rowWarning->getError());
+						return false;
+					}
+					
+					if (!$rowWarning->store()) {
+						$this->setError($rowWarning->getError());
+						return false;
+					}
 				}
-				
-				$rowWarning = JTable::getInstance('warning', 'BtsTable');
-				
-				if (!$rowWarning->bind($row)) {
-					$this->setError($rowWarning->getError());
-					return false;
-				}
-				
-				if (!$rowWarning->store()) {
-					$this->setError($rowWarning->getError());
-					return false;
-				}
-				
 			}
 		}
 		

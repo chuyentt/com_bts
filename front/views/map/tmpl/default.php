@@ -127,9 +127,10 @@ jQuery( document ).ready(function( $ ) {
 							station.resetForm();
 						},
 						buttons: {
-                            'Close': function() {
+                            'Đóng': function() {
 								$('#tblWarningList tbody').empty();
 								$('#warningHistory').hide();
+								$('#warningListStationID').val('');
                                 $(this).dialog('close');
                                 return false; 
                             }
@@ -464,6 +465,8 @@ jQuery( document ).ready(function( $ ) {
 					btnBack.on('click', function() {
 						$('#tblWarningList tbody').empty();
 						$('#warningHistory').hide();
+						$('#warningListStationID').val('');
+						if ($('#btnSaveWarningList').length!=0) $('#btnSaveWarningList').remove();
 						dialog.dialog('option', 'title', '<?php echo JText::_('COM_BTS_TITLE_STATION_DETAILS'); ?>: ' + marker.bts_name + ' ' + marker.network);
 						$(this).remove();
 					});
@@ -489,11 +492,24 @@ jQuery( document ).ready(function( $ ) {
 							data: $('#frmWarningList').serialize(),
 							success: function(data) {
 								$('#warningHistoryLoading').hide();
+								
+								// back to previous screen
+								$('#tblWarningList tbody').empty();
+								$('#warningHistory').hide();
+								$('#warningListStationID').val('');
+								
+								dialog.dialog('option', 'title', '<?php echo JText::_('COM_BTS_TITLE_STATION_DETAILS'); ?>: ' + marker.bts_name + ' ' + marker.network);
+								$('#btnBackWarningList').remove();
+								$('#btnSaveWarningList').remove();
+								
 							}
 						});
 					});
 					$('.ui-dialog-buttonset').prepend(btnSave);
 				}
+				
+				// set ID for station in warning list form
+				$('#warningListStationID').val(marker.bts_id);
 				
 				// get warning list
 				$.ajax({
@@ -772,20 +788,21 @@ jQuery( document ).ready(function( $ ) {
 			<table class="table table-hover" id="tblWarningList">
 				<thead>
 					<tr>
-						<th>ID</th>
-						<th><?php echo JText::_('COM_BTS_WARNINGS_LEVEL'); ?></th>
-						<th><?php echo JText::_('COM_BTS_WARNINGS_WARNING_DESCRIPTION'); ?> </th>
-						<th><?php echo JText::_('COM_BTS_WARNINGS_MAINTENANCE_STATE'); ?> </th>
-						<th><?php echo JText::_('COM_BTS_WARNINGS_MAINTENANCE_BY'); ?> </th>
-						<th><?php echo JText::_('COM_BTS_WARNINGS_MAINTENANCE_TIME'); ?> </th>
-						<th><?php echo JText::_('COM_BTS_WARNINGS_APPROVE_BY'); ?> </th>
-						<th><?php echo JText::_('COM_BTS_WARNINGS_APPROVE_TIME'); ?> </th>
+						<th><a href="javascript:void(0)">ID</a></th>
+						<th><a href="javascript:void(0)" title="<?php echo JText::_('COM_BTS_WARNINGS_LEVEL'); ?>">Level</a></th>
+						<th><a href="javascript:void(0)" title="<?php echo JText::_('COM_BTS_WARNINGS_WARNING_DESCRIPTION'); ?>">Mô tả</a> </th>
+						<th><a href="javascript:void(0)" title="">Trạng thái</a> </th>
+						<th><a href="javascript:void(0)" title="<?php echo JText::_('COM_BTS_WARNINGS_MAINTENANCE_BY'); ?>">KP</a></th>
+						<th><a href="javascript:void(0)" title="<?php echo JText::_('COM_BTS_WARNINGS_MAINTENANCE_TIME'); ?>">TG KP</a></th>
+						<th><a href="javascript:void(0)" title="<?php echo JText::_('COM_BTS_WARNINGS_APPROVE_BY'); ?>">XN</a></th>
+						<th><a href="javascript:void(0)" title="<?php echo JText::_('COM_BTS_WARNINGS_APPROVE_TIME'); ?>">TG XN</a></th>
 					</tr>
 				</thead>
 				<tbody>
 					
 				</tbody>
 			</table>
+			<input type="hidden" name="station_id" id="warningListStationID" />
 		</form>
 	</div>
 	
