@@ -134,7 +134,7 @@ class BtsModelStations extends JModelList {
                 )
         );
         $query->from('`#__bts_station` AS a');
-        $query->leftJoin('(SELECT station_id, MAX(level) warning_level FROM `#__bts_warning` WHERE maintenance_state=0 AND state=1 GROUP BY station_id) wm ON a.id = wm.station_id');        
+        $query->leftJoin('(SELECT station_id, MAX(level) warning_level FROM `#__bts_warning` WHERE approve_state=0 AND state=1 GROUP BY station_id) wm ON a.id = wm.station_id');        
 
         
     // Join over the users for the checked out user.

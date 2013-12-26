@@ -76,7 +76,7 @@ class BtsModelMap extends JModelList {
 		$query->join('LEFT', '#__bts_warning AS warning ON warning.station_id = a.id');
 		
 		$query->where('warning.state = 1');
-		$query->where('warning.maintenance_state = 0');
+		$query->where('warning.approve_state = 0');
         
 		// remove by executing slowly
         // $query->where(
