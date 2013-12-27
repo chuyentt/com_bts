@@ -230,5 +230,4 @@ class BtsModelWarnings extends JModelList {
 		}
         return $items;
     }
-
 }

@@ -110,4 +110,24 @@ class BtsHelper
         }
         return $selectedFields;
     }
+	
+	/**
+	 * return state buttons; $task[0]: unpublish; $task[1]: publish; 
+	 *
+	 * @return	String
+	 */
+	public static function btnState($prefix = '', $tasks, $alts, $actions, $value, $i, $disable = false, $img1 = 'tick.png', $img0 = 'publish_x.png' )  {
+
+		$img = $value ? $img1 : $img0;
+		$task = $value ? $tasks[0] : $tasks[1];
+		$alt = $value ? $alts[1] : $alts[0];
+		$action = $value ? $actions[0] : $actions[1];
+		
+		if ($disable) {
+			return JHtml::_('image', 'admin/' . $img, $alt, null, true);
+		} else {
+			return '<a href="#" onclick="return listItemTask(\'cb' . $i . '\',\'' . $prefix . $task . '\')" title="' . $action . '">'
+			. JHtml::_('image', 'admin/' . $img, $alt, null, true) . '</a>';
+		}
+	}
 }
