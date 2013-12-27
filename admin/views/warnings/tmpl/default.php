@@ -109,15 +109,6 @@ if (!empty($this->extra_sidebar)) {
 						<?php echo JHtml::_('grid.sort', 'JSTATUS', 'a.state', $listDirn, $listOrder); ?>
 					</th>
                 <?php endif; ?>
-                
-				<th width="1%" class="nowrap center">
-					<?php echo JHtml::_('grid.sort', 'COM_BTS_WARNINGS_MAINTENANCE_STATE', 'a.maintenance_state', $listDirn, $listOrder); ?>
-				</th>
-				
-				<th width="1%" class="nowrap center">
-					<?php echo JHtml::_('grid.sort', 'COM_BTS_WARNINGS_APPROVE_STATE', 'a.approve_state', $listDirn, $listOrder); ?>
-				</th>
-					
 				<th class='left'>
 				<?php echo JHtml::_('grid.sort',  'COM_BTS_WARNINGS_STATION_ID', 'a.station_id', $listDirn, $listOrder); ?>
 				</th>
@@ -145,13 +136,13 @@ if (!empty($this->extra_sidebar)) {
 				<th class='left'>
 				<?php echo JHtml::_('grid.sort',  'COM_BTS_WARNINGS_APPROVE_TIME', 'a.approve_time', $listDirn, $listOrder); ?>
 				</th>
-				<th class='left'>
-				<?php echo JHtml::_('grid.sort',  'COM_BTS_WARNINGS_MAINTENANCE_STATE', 'a.maintenance_state', $listDirn, $listOrder); ?>
+				
+				<th width="1%" class="nowrap center">
+					<?php echo JHtml::_('grid.sort', 'COM_BTS_WARNINGS_MAINTENANCE_STATE', 'a.maintenance_state', $listDirn, $listOrder); ?>
 				</th>
-				<th class='left'>
-				<?php echo JHtml::_('grid.sort',  'COM_BTS_WARNINGS_APPROVE_STATE', 'a.approve_state', $listDirn, $listOrder); ?>
+				<th width="1%" class="nowrap center">
+					<?php echo JHtml::_('grid.sort', 'COM_BTS_WARNINGS_APPROVE_STATE', 'a.approve_state', $listDirn, $listOrder); ?>
 				</th>
-                    
                     
                 <?php if (isset($this->items[0]->id)): ?>
 					<th width="1%" class="nowrap center hidden-phone">
@@ -213,34 +204,7 @@ if (!empty($this->extra_sidebar)) {
 						<?php echo JHtml::_('jgrid.published', $item->state, $i, 'warnings.', $canChange, 'cb'); ?>
 					</td>
                 <?php endif; ?>
-					
-					<td class="center">
-						<?php 
-							echo BtsHelper::btnState(
-								'warnings.',
-								array('unmaintenance', 'maintenance'),
-								array(JText::_('COM_BTS_STATE_ALT_MAINTENANCE_NOT'), JText::_('COM_BTS_STATE_ACTION_MAINTENANCE')),
-								array(JText::_('COM_BTS_STATE_ACTION_MAINTENANCE_REMOVE'), JText::_('COM_BTS_STATE_ACTION_MAINTENANCE')),
-								$item->maintenance_state,
-								$i,
-								true
-							); 
-						?>
-					</td>
-					
-					<td class="center">
-						<?php 
-							echo BtsHelper::btnState(
-								'warnings.',
-								array('unapprove', 'approve'),
-								array(JText::_('COM_BTS_STATE_ALT_APPROVE_NOT'), JText::_('COM_BTS_STATE_ACTION_APPROVE')),
-								array(JText::_('COM_BTS_STATE_ACTION_APPROVE_REMOVE'), JText::_('COM_BTS_STATE_ACTION_APPROVE')),
-								$item->approve_state,
-								$i
-							); 
-						?>
-					</td>
-                    
+				
 				<td>
 
 					<?php echo $item->station_id; ?>
@@ -284,14 +248,32 @@ if (!empty($this->extra_sidebar)) {
 
 					<?php echo $item->approve_time; ?>
 				</td>
-				<td>
-
-					<?php echo $item->maintenance_state; ?>
-				</td>
-				<td>
-
-					<?php echo $item->approve_state; ?>
-				</td>
+				<td class="center">
+						<?php 
+							echo BtsHelper::btnState(
+								'warnings.',
+								array('unmaintenance', 'maintenance'),
+								array(JText::_('COM_BTS_STATE_ALT_MAINTENANCE_NOT'), JText::_('COM_BTS_STATE_ACTION_MAINTENANCE')),
+								array(JText::_('COM_BTS_STATE_ACTION_MAINTENANCE_REMOVE'), JText::_('COM_BTS_STATE_ACTION_MAINTENANCE')),
+								$item->maintenance_state,
+								$i,
+								true
+							); 
+						?>
+					</td>
+					
+					<td class="center">
+						<?php 
+							echo BtsHelper::btnState(
+								'warnings.',
+								array('unapprove', 'approve'),
+								array(JText::_('COM_BTS_STATE_ALT_APPROVE_NOT'), JText::_('COM_BTS_STATE_ACTION_APPROVE')),
+								array(JText::_('COM_BTS_STATE_ACTION_APPROVE_REMOVE'), JText::_('COM_BTS_STATE_ACTION_APPROVE')),
+								$item->approve_state,
+								$i
+							); 
+						?>
+					</td>
 
 
                 <?php if (isset($this->items[0]->id)): ?>

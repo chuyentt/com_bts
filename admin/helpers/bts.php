@@ -116,7 +116,7 @@ class BtsHelper
 	 *
 	 * @return	String
 	 */
-	public static function btnState($prefix = '', $tasks, $alts, $actions, $value, $i, $disable = false, $img1 = 'tick.png', $img0 = 'publish_x.png' )  {
+	public static function btnState($prefix = '', $tasks, $alts, $actions, $value, $i, $disable = false, $img1 = 'upgrade_tick.png', $img0 = 'upgrade_cross.png' )  {
 
 		$img = $value ? $img1 : $img0;
 		$task = $value ? $tasks[0] : $tasks[1];
