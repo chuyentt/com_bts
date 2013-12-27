@@ -65,3 +65,19 @@ CREATE TABLE IF NOT EXISTS `#__bts_warning` (
 PRIMARY KEY (`id`)
 ) DEFAULT COLLATE=utf8_general_ci;
 
+CREATE TABLE IF NOT EXISTS `#__bts_note` (
+`id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+
+`ordering` INT(11)  NOT NULL ,
+`state` TINYINT(1)  NOT NULL ,
+`checked_out` INT(11)  NOT NULL ,
+`checked_out_time` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+`created_by` INT(11)  NOT NULL ,
+`created_time` DATETIME NOT NULL ,
+`approved_by` INT(11)  NOT NULL ,
+`approved_time` DATETIME NOT NULL ,
+`station_id` INT NOT NULL ,
+`note` VARCHAR(255)  NOT NULL ,
+`approved` TINYINT(1)  NOT NULL ,
+PRIMARY KEY (`id`)
+) DEFAULT COLLATE=utf8_general_ci;

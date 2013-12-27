@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset>
+
+              <field name="id" type="text" default="0" label="COM_BTS_FORM_LBL_NOTE_ID"
+            readonly="true" class="readonly"
+            description="JGLOBAL_FIELD_ID_DESC" /> 
+
+       <field name="created_by" type="createdby" default="" 
+            label="COM_BTS_FORM_LBL_NOTE_CREATED_BY"
+            description="COM_BTS_FORM_DESC_NOTE_CREATED_BY"  /> 
+
+ 
+		<field name="filter_created_by" type="user" onchange="this.form.submit();" /> 
+
+       <field name="created_time" type="timecreated" default="" 
+            label="COM_BTS_FORM_LBL_NOTE_CREATED_TIME"
+            description="COM_BTS_FORM_DESC_NOTE_CREATED_TIME"  hidden="true" /> 
+
+       <field name="approved_by" type="user" readonly="true"
+                
+            label="COM_BTS_FORM_LBL_NOTE_APPROVED_BY"
+            description="COM_BTS_FORM_DESC_NOTE_APPROVED_BY" 
+                
+                
+                 /> 
+
+ 
+		<field name="filter_approved_by" type="user" onchange="this.form.submit();" /> 
+
+       <field name="approved_time" type="timeupdated" default="" 
+            label="COM_BTS_FORM_LBL_NOTE_APPROVED_TIME"
+            description="COM_BTS_FORM_DESC_NOTE_APPROVED_TIME"  /> 
+
+       <field name="station_id" type="sql" class="inputbox" readonly="true"
+        
+            label="COM_BTS_FORM_LBL_NOTE_STATION_ID"
+            description="COM_BTS_FORM_DESC_NOTE_STATION_ID" 
+        
+        
+        
+        
+        query="SELECT 0 AS `id`, '- Select Tên BTS -' AS `bts_name` UNION SELECT `id`, `bts_name` FROM `#__bts_station`" key_field="id" value_field="bts_name"
+         /> 
+
+       <field name="filter_station_id" type="sql" class="inputbox"
+            onchange="this.form.submit();"
+            query="SELECT 0 AS `id`, '- Select Tên BTS -' AS `bts_name` UNION SELECT `id`, `bts_name` FROM `#__bts_station`" key_field="id" value_field="bts_name"
+             /> 
+
+       <field name="note" type="text" readonly="true"
+                
+            label="COM_BTS_FORM_LBL_NOTE_NOTE"
+            description="COM_BTS_FORM_DESC_NOTE_NOTE" 
+                
+                
+                
+            filter="safehtml" /> 
+
+         <field
+        name="state"
+        type="list"
+        label="JSTATUS"
+        description="JFIELD_PUBLISHED_DESC"
+        class="inputbox"
+        size="1"
+        default="1">
+        <option value="1">JPUBLISHED</option>
+        <option value="0">JUNPUBLISHED</option>
+    </field> 
+
+                        <field name="checked_out" type="hidden" filter="unset" />
+        <field name="checked_out_time" type="hidden" filter="unset" />
+
+	</fieldset>
+
+</form>
