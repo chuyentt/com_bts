@@ -122,7 +122,7 @@ if (!empty($this->extra_sidebar)) {
 				<th class='left'>
 				<?php echo JHtml::_('grid.sort',  'COM_BTS_NOTES_CREATED_TIME', 'a.created_time', $listDirn, $listOrder); ?>
 				</th>
-				<th class='left'>
+				<th class='center'>
 				<?php echo JHtml::_('grid.sort',  'COM_BTS_NOTES_APPROVED', 'a.approved', $listDirn, $listOrder); ?>
 				</th>
 				<th class='left'>
@@ -217,9 +217,17 @@ if (!empty($this->extra_sidebar)) {
 
 					<?php echo $item->created_time; ?>
 				</td>
-				<td>
-
-					<?php echo $item->approved; ?>
+				<td class="center">
+					<?php 
+						echo BtsHelper::btnState(
+							'notes.',
+							array('unapprove', 'approve'),
+							array(JText::_('COM_BTS_STATE_ALT_APPROVE_NOT'), JText::_('COM_BTS_STATE_ACTION_APPROVE')),
+							array(JText::_('COM_BTS_STATE_ACTION_APPROVE_REMOVE'), JText::_('COM_BTS_STATE_ACTION_APPROVE')),
+							$item->approved,
+							$i
+						); 
+					?>
 				</td>
 				<td>
 

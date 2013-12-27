@@ -17,6 +17,14 @@ jimport('joomla.application.component.controlleradmin');
  */
 class BtsControllerNotes extends JControllerAdmin
 {
+
+	public function __construct($config = array())
+	{
+		parent::__construct($config);
+
+		$this->registerTask('unapprove',	'approve');
+	}
+	
 	/**
 	 * Proxy for getModel.
 	 * @since	1.6
@@ -61,6 +69,32 @@ class BtsControllerNotes extends JControllerAdmin
 		JFactory::getApplication()->close();
 	}
     
-    
+	/**
+	 * Method to toggle the Approve state of warnings
+	 *
+	 * @return  void
+	 */
+	public function approve()
+	{
+		// Check for request forgeries
+		JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+
+		$user   = JFactory::getUser();
+		$ids    = $this->input->get('cid', array(), 'array');
+		$values = array('approve' => 1, 'unapprove' => 0);
+		$task   = $this->getTask();
+		$value  = JArrayHelper::getValue($values, $task, 0, 'int');
+		
+		// Get the model.
+		$model = $this->getModel();
+
+		// Publish the items.
+		if (!$model->approve($ids, $value))
+		{
+			JError::raiseWarning(500, $model->getError());
+		}
+
+		$this->setRedirect('index.php?option=com_bts&view=notes');
+	}
     
 }

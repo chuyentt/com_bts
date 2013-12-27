@@ -130,5 +130,34 @@ class BtsModelNote extends JModelAdmin
 
 		}
 	}
+	
+	/**
+	 * Method to toggle the Approve state of notes
+	 *
+	 * @return  boolean  True on success.
+	 */
+	public function approve($pks, $value = 0)
+	{
+		// Sanitize the ids.
+		$pks = (array) $pks;
+		JArrayHelper::toInteger($pks);
+
+		if (empty($pks))
+		{
+			$this->setError(JText::_('COM_BTS_NO_ITEM_SELECTED'));
+			return false;
+		}
+		
+		$db = $this->getDbo();
+		$query = $db->getQuery(true)
+					->update($db->quoteName('#__bts_note'))
+					->set('approved = ' . (int) $value)
+					->where('id IN (' . implode(',', $pks) . ')');
+		$db->setQuery($query);
+		$db->execute();
+		
+		return true;
+		
+	}
 
 }

@@ -34,6 +34,11 @@ class BtsHelper
 			JText::_('COM_BTS_TITLE_STATUS'),
 			'index.php?option=com_bts&view=status',
 			$vName == 'status'
+		);
+		JHtmlSidebar::addEntry(
+			JText::_('COM_BTS_TITLE_NOTES'),
+			'index.php?option=com_bts&view=notes',
+			$vName == 'notes'
 		);		
 		JHtmlSidebar::addEntry(
 			JText::_('COM_BTS_TITLE_IMPORTS'),
