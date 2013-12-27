@@ -109,12 +109,13 @@ if (!empty($this->extra_sidebar)) {
 						<?php echo JHtml::_('grid.sort', 'JSTATUS', 'a.state', $listDirn, $listOrder); ?>
 					</th>
                 <?php endif; ?>
+                    
 				<th class='left'>
 				<?php echo JHtml::_('grid.sort',  'COM_BTS_NOTES_STATION_ID', 'a.station_id', $listDirn, $listOrder); ?>
 				</th>
 				<th class='left'>
 				<?php echo JHtml::_('grid.sort',  'COM_BTS_NOTES_NOTE', 'a.note', $listDirn, $listOrder); ?>
-				</th>                    
+				</th>
 				<th class='left'>
 				<?php echo JHtml::_('grid.sort',  'COM_BTS_NOTES_CREATED_BY', 'a.created_by', $listDirn, $listOrder); ?>
 				</th>
@@ -192,10 +193,11 @@ if (!empty($this->extra_sidebar)) {
 						<?php echo JHtml::_('jgrid.published', $item->state, $i, 'notes.', $canChange, 'cb'); ?>
 					</td>
                 <?php endif; ?>
+                    
 				<td>
 
 					<?php echo $item->station_id; ?>
-				</td>  
+				</td>
 				<td>
 				<?php if (isset($item->checked_out) && $item->checked_out) : ?>
 					<?php echo JHtml::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'notes.', $canCheckin); ?>
@@ -206,7 +208,7 @@ if (!empty($this->extra_sidebar)) {
 				<?php else : ?>
 					<?php echo $this->escape($item->note); ?>
 				<?php endif; ?>
-				</td>                  
+				</td>
 				<td>
 
 					<?php echo $item->created_by; ?>
@@ -227,7 +229,8 @@ if (!empty($this->extra_sidebar)) {
 
 					<?php echo $item->approved_time; ?>
 				</td>
-				
+
+
                 <?php if (isset($this->items[0]->id)): ?>
 					<td class="center hidden-phone">
 						<?php echo (int) $item->id; ?>

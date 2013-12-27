@@ -120,13 +120,7 @@ class BtsViewNotes extends JViewLegacy
 			JHtml::_('select.options', JHtml::_('jgrid.publishedOptions'), "value", "text", $this->state->get('filter.state'), true)
 
 		);
-
-		//Filter for the field created_by
-		$this->extra_sidebar .= '<small><label for="filter_created_by">Người tạo</label></small>';
-		$this->extra_sidebar .= JHtmlList::users('filter_created_by', $this->state->get('filter.created_by'), 1, 'onchange="this.form.submit();"');
-		//Filter for the field approved_by
-		$this->extra_sidebar .= '<small><label for="filter_approved_by">Người xác nhận</label></small>';
-		$this->extra_sidebar .= JHtmlList::users('filter_approved_by', $this->state->get('filter.approved_by'), 1, 'onchange="this.form.submit();"');        //Filter for the field ".station_id;
+        //Filter for the field ".station_id;
         jimport('joomla.form.form');
         $options = array();
         JForm::addFormPath(JPATH_COMPONENT . '/models/forms');
@@ -168,6 +162,12 @@ class BtsViewNotes extends JViewLegacy
             JHtml::_('select.options', $options, "value", "text", $this->state->get('filter.station_id')),
             true
         );
+		//Filter for the field created_by
+		$this->extra_sidebar .= '<small><label for="filter_created_by">Người tạo</label></small>';
+		$this->extra_sidebar .= JHtmlList::users('filter_created_by', $this->state->get('filter.created_by'), 1, 'onchange="this.form.submit();"');
+		//Filter for the field approved_by
+		$this->extra_sidebar .= '<small><label for="filter_approved_by">Người xác nhận</label></small>';
+		$this->extra_sidebar .= JHtmlList::users('filter_approved_by', $this->state->get('filter.approved_by'), 1, 'onchange="this.form.submit();"');
         
 	}
     
@@ -177,12 +177,13 @@ class BtsViewNotes extends JViewLegacy
 		'a.id' => JText::_('JGRID_HEADING_ID'),
 		'a.ordering' => JText::_('JGRID_HEADING_ORDERING'),
 		'a.state' => JText::_('JSTATUS'),
-		'a.created_by' => JText::_('COM_BTS_NOTES_CREATED_BY'),
-		'a.created_time' => JText::_('COM_BTS_NOTES_CREATED_TIME'),
-		'a.approved_by' => JText::_('COM_BTS_NOTES_APPROVED_BY'),
-		'a.approved_time' => JText::_('COM_BTS_NOTES_APPROVED_TIME'),
 		'a.station_id' => JText::_('COM_BTS_NOTES_STATION_ID'),
 		'a.note' => JText::_('COM_BTS_NOTES_NOTE'),
+		'a.created_by' => JText::_('COM_BTS_NOTES_CREATED_BY'),
+		'a.created_time' => JText::_('COM_BTS_NOTES_CREATED_TIME'),
+		'a.approved' => JText::_('COM_BTS_NOTES_APPROVED'),
+		'a.approved_by' => JText::_('COM_BTS_NOTES_APPROVED_BY'),
+		'a.approved_time' => JText::_('COM_BTS_NOTES_APPROVED_TIME'),
 		);
 	}
 
