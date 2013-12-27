@@ -29,12 +29,13 @@ class BtsModelNotes extends JModelList {
                                 'id', 'a.id',
                 'ordering', 'a.ordering',
                 'state', 'a.state',
-                'created_by', 'a.created_by',
-                'created_time', 'a.created_time',
-                'approved_by', 'a.approved_by',
-                'approved_time', 'a.approved_time',
                 'station_id', 'a.station_id',
                 'note', 'a.note',
+                'created_by', 'a.created_by',
+                'created_time', 'a.created_time',
+                'approved', 'a.approved',
+                'approved_by', 'a.approved_by',
+                'approved_time', 'a.approved_time',
 
             );
         }
@@ -59,14 +60,14 @@ class BtsModelNotes extends JModelList {
         $this->setState('filter.state', $published);
 
         
+		//Filtering station_id
+		$this->setState('filter.station_id', $app->getUserStateFromRequest($this->context.'.filter.station_id', 'filter_station_id', '', 'string'));
+
 		//Filtering created_by
 		$this->setState('filter.created_by', $app->getUserStateFromRequest($this->context.'.filter.created_by', 'filter_created_by', '', 'string'));
 
 		//Filtering approved_by
 		$this->setState('filter.approved_by', $app->getUserStateFromRequest($this->context.'.filter.approved_by', 'filter_approved_by', '', 'string'));
-
-		//Filtering station_id
-		$this->setState('filter.station_id', $app->getUserStateFromRequest($this->context.'.filter.station_id', 'filter_station_id', '', 'string'));
 
 
         // Load the parameters.
@@ -120,15 +121,15 @@ class BtsModelNotes extends JModelList {
     $query->select('uc.name AS editor');
     $query->join('LEFT', '#__users AS uc ON uc.id=a.checked_out');
     
+		// Join over the foreign key 'station_id'
+		$query->select('#__bts_station_991636.bts_name AS stations_bts_name_991636');
+		$query->join('LEFT', '#__bts_station AS #__bts_station_991636 ON #__bts_station_991636.id = a.station_id');
 		// Join over the user field 'created_by'
 		$query->select('created_by.name AS created_by');
 		$query->join('LEFT', '#__users AS created_by ON created_by.id = a.created_by');
 		// Join over the user field 'approved_by'
 		$query->select('approved_by.name AS approved_by');
 		$query->join('LEFT', '#__users AS approved_by ON approved_by.id = a.approved_by');
-		// Join over the foreign key 'station_id'
-		$query->select('#__bts_station_991636.bts_name AS stations_bts_name_991636');
-		$query->join('LEFT', '#__bts_station AS #__bts_station_991636 ON #__bts_station_991636.id = a.station_id');
 
         
     // Filter by published state
@@ -153,6 +154,12 @@ class BtsModelNotes extends JModelList {
 
         
 
+		//Filtering station_id
+		$filter_station_id = $this->state->get("filter.station_id");
+		if ($filter_station_id) {
+			$query->where("a.station_id = '".$db->escape($filter_station_id)."'");
+		}
+
 		//Filtering created_by
 		$filter_created_by = $this->state->get("filter.created_by");
 		if ($filter_created_by) {
@@ -163,12 +170,6 @@ class BtsModelNotes extends JModelList {
 		$filter_approved_by = $this->state->get("filter.approved_by");
 		if ($filter_approved_by) {
 			$query->where("a.approved_by = '".$db->escape($filter_approved_by)."'");
-		}
-
-		//Filtering station_id
-		$filter_station_id = $this->state->get("filter.station_id");
-		if ($filter_station_id) {
-			$query->where("a.station_id = '".$db->escape($filter_station_id)."'");
 		}
 
 
