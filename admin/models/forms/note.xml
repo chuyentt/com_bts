@@ -6,7 +6,7 @@
             readonly="true" class="readonly"
             description="JGLOBAL_FIELD_ID_DESC" /> 
 
-       <field name="station_id" type="sql" class="inputbox"
+       <field name="station_id" type="sql" class="inputbox" readonly="true"
         
             label="COM_BTS_FORM_LBL_NOTE_STATION_ID"
             description="COM_BTS_FORM_DESC_NOTE_STATION_ID" 
@@ -22,7 +22,7 @@
             query="SELECT 0 AS `id`, '- Select Tên BTS -' AS `bts_name` UNION SELECT `id`, `bts_name` FROM `#__bts_station`" key_field="id" value_field="bts_name"
              /> 
 
-       <field name="note" type="text"
+       <field name="note" type="text" readonly="true"
                 
             label="COM_BTS_FORM_LBL_NOTE_NOTE"
             description="COM_BTS_FORM_DESC_NOTE_NOTE" 
@@ -31,7 +31,7 @@
                 
             filter="safehtml" /> 
 
-       <field name="created_by" type="createdby" default="" 
+       <field name="created_by" type="createdby" default="" readonly="true"
             label="COM_BTS_FORM_LBL_NOTE_CREATED_BY"
             description="COM_BTS_FORM_DESC_NOTE_CREATED_BY"  /> 
 
@@ -40,9 +40,9 @@
 
        <field name="created_time" type="timecreated" default="" 
             label="COM_BTS_FORM_LBL_NOTE_CREATED_TIME"
-            description="COM_BTS_FORM_DESC_NOTE_CREATED_TIME"  hidden="true" /> 
+            description="COM_BTS_FORM_DESC_NOTE_CREATED_TIME"  /> 
 
-       <field name="approved" type="text" size="40" class="inputbox"
+       <field name="approved" type="checkbox" size="40" class="inputbox"  disabled="true"
         
             label="COM_BTS_FORM_LBL_NOTE_APPROVED"
             description="COM_BTS_FORM_DESC_NOTE_APPROVED" 
@@ -51,7 +51,7 @@
         
         filter="safehtml" /> 
 
-       <field name="approved_by" type="user"
+       <field name="approved_by" type="user" default="" readonly="true"
                 
             label="COM_BTS_FORM_LBL_NOTE_APPROVED_BY"
             description="COM_BTS_FORM_DESC_NOTE_APPROVED_BY" 
@@ -62,9 +62,15 @@
  
 		<field name="filter_approved_by" type="user" onchange="this.form.submit();" /> 
 
-       <field name="approved_time" type="timeupdated" default="" 
+       <field name="approved_time" type="text" class="inputbox" readonly="true"
+        
+        
+         default="0000-00-00 00:00:00" 
+        
             label="COM_BTS_FORM_LBL_NOTE_APPROVED_TIME"
-            description="COM_BTS_FORM_DESC_NOTE_APPROVED_TIME"  /> 
+            description="COM_BTS_FORM_DESC_NOTE_APPROVED_TIME" 
+        format="%Y-%m-%d %H:%M:%S"
+        filter="safehtml" /> 
 
          <field
         name="state"

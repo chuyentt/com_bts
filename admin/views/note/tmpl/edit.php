@@ -75,16 +75,18 @@ $document->addStyleSheet('components/com_bts/assets/css/bts.css');
 				<div class="control-label"><?php echo $this->form->getLabel('note'); ?></div>
 				<div class="controls"><?php echo $this->form->getInput('note'); ?></div>
 			</div>
-
-				<?php if(empty($this->item->created_by)){ ?>
-					<input type="hidden" name="jform[created_by]" value="<?php echo JFactory::getUser()->id; ?>" />
-
-				<?php } 
-				else{ ?>
-					<input type="hidden" name="jform[created_by]" value="<?php echo $this->item->created_by; ?>" />
-
-				<?php } ?>
-				<?php echo $this->form->getInput('created_time'); ?>				<input type="hidden" name="jform[approved]" value="<?php echo $this->item->approved; ?>" />
+			<div class="control-group">
+				<div class="control-label"><?php echo $this->form->getLabel('created_by'); ?></div>
+				<div class="controls"><?php echo $this->form->getInput('created_by'); ?></div>
+			</div>
+			<div class="control-group">
+				<div class="control-label"><?php echo $this->form->getLabel('created_time'); ?></div>
+				<div class="controls"><?php echo $this->form->getInput('created_time'); ?></div>
+			</div>
+			<div class="control-group">
+				<div class="control-label"><?php echo $this->form->getLabel('approved'); ?></div>
+				<div class="controls"><?php echo $this->form->getInput('approved'); ?></div>
+			</div>
 			<div class="control-group">
 				<div class="control-label"><?php echo $this->form->getLabel('approved_by'); ?></div>
 				<div class="controls"><?php echo $this->form->getInput('approved_by'); ?></div>
