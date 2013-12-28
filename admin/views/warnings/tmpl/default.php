@@ -207,7 +207,7 @@ if (!empty($this->extra_sidebar)) {
 				
 				<td>
 
-					<?php echo $item->station_id; ?>
+					<?php echo $item->station_id . ' (' . $item->network . ')'; ?>
 				</td>
 				<td>
 				<?php if (isset($item->checked_out) && $item->checked_out) : ?>

@@ -136,7 +136,7 @@ class BtsModelWarnings extends JModelList {
 		$query->select('created_by.name AS created_by');
 		$query->join('LEFT', '#__users AS created_by ON created_by.id = a.created_by');
 		// Join over the foreign key 'station_id'
-		$query->select('#__bts_station_986074.bts_name AS stations_bts_name_986074');
+		$query->select('#__bts_station_986074.bts_name AS bts_name, #__bts_station_986074.network AS network');
 		$query->join('LEFT', '#__bts_station AS #__bts_station_986074 ON #__bts_station_986074.id = a.station_id');
 		// Join over the user field 'maintenance_by'
 		$query->select('maintenance_by.name AS maintenance_by');
