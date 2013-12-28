@@ -25,7 +25,7 @@ $password = JRequest::getVar('password', 1);
 $checking = JRequest::getVar('checking', 2);
 if ($username != 1 && $password != 1 && $checking == 1) {
     JFactory::getApplication()->login(array('username'=>$username,'password'=>$password),array('remember'=>true));
-    $canEdit = JFactory::getUser()->authorise('core.edit', 'com_bts');
+    $canEdit = JFactory::getUser()->authorise('core.edit.state', 'com_bts');
     if($canEdit):
         $json = json_encode(JFactory::getUser());
         $jsonData = json_decode($json,true);

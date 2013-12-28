@@ -37,10 +37,12 @@ class BtsTablenote extends JTable {
         
 		$input = JFactory::getApplication()->input;
 		$task = $input->getString('task', '');
-		if(($task == 'save' || $task == 'apply') && (!JFactory::getUser()->authorise('core.edit','com_bts') && $array['state'] == 1)){
+		if(($task == 'save' || $task == 'apply') && (!JFactory::getUser()->authorise('core.edit.state','com_bts') && $array['state'] == 1)){
 			$array['state'] = 0;
 		}
-		$task = JRequest::getVar('task');
+		if(($task == 'save' || $task == 'apply') && (!JFactory::getUser()->authorise('core.delete','com_bts') && $array['approved'] == 1)){
+			$array['approved'] = 0;
+		}
 		if(($task == 'apply' || $task == 'save') && (!isset($array['approved']))){
 			$array['created_time'] = date("Y-m-d H:i:s");
 			$array['created_by'] = JFactory::getUser()->id;

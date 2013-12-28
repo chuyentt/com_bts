@@ -35,24 +35,42 @@ class BtsTablewarning extends JTable {
     public function bind($array, $ignore = '') {
 
         
-		$input = JFactory::getApplication()->input;
-		$task = $input->getString('task', '');
-		if(($task == 'save' || $task == 'apply') && (!JFactory::getUser()->authorise('core.edit.state','com_bts') && $array['state'] == 1)){
-			$array['state'] = 0;
+	$input = JFactory::getApplication()->input;
+	$task = $input->getString('task', '');
+	if(($task == 'save' || $task == 'apply') && (!JFactory::getUser()->authorise('core.edit.state','com_bts') && $array['state'] == 1)){
+		$array['state'] = 0;
+	}
+	
+	$task = JRequest::getVar('task');
+	
+	if(($task == 'apply' || $task == 'save') && (!JFactory::getUser()->authorise('core.delete','com_bts')) && $array['approve_state'] == 1){
+		$array['approve_state'] = 0;
+	}
+	if(($task == 'apply' || $task == 'save') && (!JFactory::getUser()->authorise('core.edit.state','com_bts')) && $array['maintenance_state'] == 1){
+		$array['maintenance_state'] = 0;
+	}	
+	if ($array['maintenance_state'] == 1) {
+		$maintenance_time = date("Y-m-d H:i:s");
+		$array['maintenance_time'] = $maintenance_time;
+		$array['maintenance_by'] = JFactory::getUser()->id;
+	}
+	if ($array['approve_state'] == 1) {
+		$approve_time = date("Y-m-d H:i:s");
+		$array['approve_time'] = $approve_time;
+		$array['approve_by'] = JFactory::getUser()->id;
+	}
+	//Support for multiple or not foreign key field: station_id
+	if(isset($array['station_id'])){
+		if(is_array($array['station_id'])){
+			$array['station_id'] = implode(',',$array['station_id']);
 		}
-
-		//Support for multiple or not foreign key field: station_id
-			if(isset($array['station_id'])){
-				if(is_array($array['station_id'])){
-					$array['station_id'] = implode(',',$array['station_id']);
-				}
-				else if(strrpos($array['station_id'], ',') != false){
-					$array['station_id'] = explode(',',$array['station_id']);
-				}
-				else if(empty($array['station_id'])) {
-					$array['station_id'] = '';
-				}
-			}
+		else if(strrpos($array['station_id'], ',') != false){
+			$array['station_id'] = explode(',',$array['station_id']);
+		}
+		else if(empty($array['station_id'])) {
+			$array['station_id'] = '';
+		}
+	}
 
         if (isset($array['params']) && is_array($array['params'])) {
             $registry = new JRegistry();
