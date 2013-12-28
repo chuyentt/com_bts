@@ -122,7 +122,7 @@ class BtsModelNotes extends JModelList {
     $query->join('LEFT', '#__users AS uc ON uc.id=a.checked_out');
     
 		// Join over the foreign key 'station_id'
-		$query->select('#__bts_station_991636.bts_name AS stations_bts_name_991636');
+		$query->select('#__bts_station_991636.bts_name AS stations_bts_name_991636, #__bts_station_991636.network AS network');
 		$query->join('LEFT', '#__bts_station AS #__bts_station_991636 ON #__bts_station_991636.id = a.station_id');
 		// Join over the user field 'created_by'
 		$query->select('created_by.name AS created_by');
