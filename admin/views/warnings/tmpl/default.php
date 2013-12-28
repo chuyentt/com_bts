@@ -113,6 +113,9 @@ if (!empty($this->extra_sidebar)) {
 				<?php echo JHtml::_('grid.sort',  'COM_BTS_WARNINGS_STATION_ID', 'a.station_id', $listDirn, $listOrder); ?>
 				</th>
 				<th class='left'>
+				<?php echo JHtml::_('grid.sort',  'COM_BTS_STATIONS_NETWORK', '#__bts_station_986074.network', $listDirn, $listOrder); ?>
+				</th>
+				<th class='left'>
 				<?php echo JHtml::_('grid.sort',  'COM_BTS_WARNINGS_WARNING_DESCRIPTION', 'a.warning_description', $listDirn, $listOrder); ?>
 				</th>
 				<th class='left'>
@@ -207,7 +210,11 @@ if (!empty($this->extra_sidebar)) {
 				
 				<td>
 
-					<?php echo $item->station_id . ' (' . $item->network . ')'; ?>
+					<?php echo $item->station_id; ?>
+				</td>
+				<td>
+
+					<?php echo $item->network; ?>
 				</td>
 				<td>
 				<?php if (isset($item->checked_out) && $item->checked_out) : ?>
@@ -294,4 +301,3 @@ if (!empty($this->extra_sidebar)) {
 	</div>
 </form>        
 
-		
