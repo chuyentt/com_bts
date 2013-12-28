@@ -149,11 +149,14 @@ class BtsModelWarning extends JModelAdmin
 		}
 		
 		$db = $this->getDbo();
+		$approved_by = JFactory::getUser()->id;
+		$approved_time = date("Y-m-d H:i:s");
 		$query = $db->getQuery(true)
 					->update($db->quoteName('#__bts_warning'))
 					->set('approve_state = ' . (int) $value)
-					->where('id IN (' . implode(',', $pks) . ')');
-		$db->setQuery($query);
+					->set('approve_by = ' . $approved_by)
+					->set('approve_time = "' . $approved_time . '"')
+					->where('id IN (' . implode(',', $pks) . ')');		$db->setQuery($query);
 		$db->execute();
 		
 		return true;
