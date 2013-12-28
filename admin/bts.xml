@@ -6,7 +6,7 @@
     <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
     <author>Chuyen Trung Tran</author>
     <authorEmail>chuyentt@gmail.com</authorEmail>
-    <authorUrl>http://www.geomatics.com.vn</authorUrl>
+    <authorUrl>http://www.geomatics.vn</authorUrl>
     <version>1.0.1</version>
     <description></description>
     
@@ -26,29 +26,23 @@
         <filename>bts.php</filename>
         <filename>controller.php</filename>
         <filename>router.php</filename>
-		<folder>assets</folder>
+        <folder>assets</folder>
         <folder>views</folder>
         <folder>models</folder>
         <folder>controllers</folder>
         <folder>helpers</folder>
     </files>
     <languages folder="site">
-        
-			<language tag="en-GB">language/en-GB.com_bts.ini</language>
-			<language tag="vi-VN">language/vi-VN.com_bts.ini</language>
+        <language tag="en-GB">language/en-GB.com_bts.ini</language>
+        <language tag="vi-VN">language/vi-VN.com_bts.ini</language>
     </languages>
     <administration>
         <menu img="components/com_bts/assets/images/s_com_bts.png" >COM_BTS</menu>
         <submenu>
-            
-			<menu link="option=com_bts&amp;view=stations" view="stations" img="components/com_bts/assets/images/s_stations.png" alt="Bts/Stations">COM_BTS_TITLE_STATIONS</menu>
-
-			<menu link="option=com_bts&amp;view=warnings" view="warnings" img="components/com_bts/assets/images/s_warnings.png" alt="Bts/Warnings">COM_BTS_TITLE_WARNINGS</menu>
-            
-			<menu link="option=com_bts&amp;view=notes" view="notes" img="components/com_bts/assets/images/s_notes.png" alt="Bts/Notes">COM_BTS_TITLE_NOTES</menu>            
-
-			<menu link="option=com_bts&amp;view=imports" view="imports" img="components/com_bts/assets/images/s_imports.png" alt="Bts/Imports">COM_BTS_TITLE_IMPORTS</menu>
-
+            <menu link="option=com_bts&amp;view=stations" view="stations" img="components/com_bts/assets/images/s_stations.png" alt="Bts/Stations">COM_BTS_TITLE_STATIONS</menu>
+            <menu link="option=com_bts&amp;view=warnings" view="warnings" img="components/com_bts/assets/images/s_warnings.png" alt="Bts/Warnings">COM_BTS_TITLE_WARNINGS</menu>
+            <menu link="option=com_bts&amp;view=notes" view="notes" img="components/com_bts/assets/images/s_notes.png" alt="Bts/Notes">COM_BTS_TITLE_NOTES</menu>          
+            <menu link="option=com_bts&amp;view=imports" view="imports" img="components/com_bts/assets/images/s_imports.png" alt="Bts/Imports">COM_BTS_TITLE_IMPORTS</menu>
         </submenu>
         <files folder="administrator">
             <filename>access.xml</filename>
@@ -65,13 +59,10 @@
             <folder>views</folder>
         </files>
         <languages folder="administrator">
-            
-			<language tag="en-GB">language/en-GB.com_bts.ini</language>
-			<language tag="en-GB">language/en-GB.com_bts.sys.ini</language>
-			<language tag="vi-VN">language/vi-VN.com_bts.ini</language>
-			<language tag="vi-VN">language/vi-VN.com_bts.sys.ini</language>
+            <language tag="en-GB">language/en-GB.com_bts.ini</language>
+            <language tag="en-GB">language/en-GB.com_bts.sys.ini</language>
+            <language tag="vi-VN">language/vi-VN.com_bts.ini</language>
+            <language tag="vi-VN">language/vi-VN.com_bts.sys.ini</language>
         </languages>
     </administration>
 </extension>
-<!-- Component built by the Joomla Component Creator -->
-<!-- http://www.notwebdesign.com/joomla-component-creator/ -->
