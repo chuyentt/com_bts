@@ -30,11 +30,13 @@ class BtsHelper
 			'index.php?option=com_bts&view=warnings',
 			$vName == 'warnings'
 		);
+/*		
 		JHtmlSidebar::addEntry(
 			JText::_('COM_BTS_TITLE_STATUS'),
 			'index.php?option=com_bts&view=status',
 			$vName == 'status'
 		);
+*/
 		JHtmlSidebar::addEntry(
 			JText::_('COM_BTS_TITLE_NOTES'),
 			'index.php?option=com_bts&view=notes',
