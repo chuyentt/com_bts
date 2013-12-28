@@ -149,9 +149,13 @@ class BtsModelNote extends JModelAdmin
 		}
 		
 		$db = $this->getDbo();
+		$approved_by = JFactory::getUser()->id;
+		$approved_time = date("Y-m-d H:i:s");
 		$query = $db->getQuery(true)
 					->update($db->quoteName('#__bts_note'))
 					->set('approved = ' . (int) $value)
+					->set('approved_by = ' . $approved_by)
+					->set('approved_time = "' . $approved_time . '"')
 					->where('id IN (' . implode(',', $pks) . ')');
 		$db->setQuery($query);
 		$db->execute();
