@@ -122,6 +122,13 @@ if (!empty($this->extra_sidebar)) {
 				<th class='left nowrap'>
 				<?php echo JHtml::_('grid.sort',  'COM_BTS_WARNINGS_LEVEL', 'a.warning_level', $listDirn, $listOrder); ?>
 				</th>
+				</th>
+				<th class='left nowrap'>
+				<?php echo JHtml::_('grid.sort',  'COM_BTS_STATIONS_PROVINCE_ID', 'a.province_id', $listDirn, $listOrder); ?>
+				</th>
+				<th class='left nowrap'>
+				<?php echo JHtml::_('grid.sort',  'COM_BTS_STATIONS_BSC_NAME', 'a.bsc_name', $listDirn, $listOrder); ?>
+				</th>			
                     
                     
                 <?php if (isset($this->items[0]->id)): ?>
@@ -197,7 +204,6 @@ if (!empty($this->extra_sidebar)) {
 				<?php endif; ?>
 				</td>
 				<td>
-
 					<?php echo $item->network; ?>
 				</td>
 				<td>
@@ -207,6 +213,14 @@ if (!empty($this->extra_sidebar)) {
 				<td>
 
 					<?php echo $item->warning_level; ?>
+				</td>
+				<td>
+
+					<?php echo $item->province_id; ?>
+				</td>
+				<td>
+
+					<?php echo $item->bsc_name; ?>
 				</td>
 
 
