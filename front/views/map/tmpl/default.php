@@ -15,9 +15,9 @@ $assetUrl = JURI::root().'components/com_bts/assets/';
 ?>
 
 <?php
-$canView = JFactory::getUser()->authorise('core.edit.own', 'com_bts');
-$canMaintenance = (JFactory::getUser()->authorise('core.edit', 'com_bts')) ? 1 : 0;
-$canApproval = (JFactory::getUser()->authorise('core.edit', 'com_bts')) ? 1 : 0;
+$canView = JFactory::getUser()->authorise('core.edit', 'com_bts');
+$canMaintenance = (JFactory::getUser()->authorise('core.edit.state', 'com_bts')) ? 1 : 0;
+$canApproval = (JFactory::getUser()->authorise('core.delete', 'com_bts')) ? 1 : 0;
 if ($canApproval) $canMaintenance = 1;
 
 $canEdit = JFactory::getUser()->authorise('core.edit', 'com_bts');
