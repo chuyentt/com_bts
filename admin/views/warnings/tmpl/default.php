@@ -94,7 +94,7 @@ if (!empty($this->extra_sidebar)) {
 		</div>        
 		<div class="clearfix"> </div>
 		<table class="table table-striped" id="warningList">
-			<thead>
+			<thead>			
 				<tr>
                 <?php if (isset($this->items[0]->ordering)): ?>
 					<th width="1%" class="nowrap center hidden-phone">
@@ -114,11 +114,13 @@ if (!empty($this->extra_sidebar)) {
 				</th>
 				<th class='left'>
 				<?php echo JHtml::_('grid.sort',  'COM_BTS_STATIONS_NETWORK', '#__bts_station_986074.network', $listDirn, $listOrder); ?>
+				<th class='left'>
+				<?php echo JHtml::_('grid.sort',  'COM_BTS_STATIONS_BSC_NAME', '#__bts_station_986074.bsc_name', $listDirn, $listOrder); ?>
 				</th>
 				<th class='left'>
 				<?php echo JHtml::_('grid.sort',  'COM_BTS_WARNINGS_WARNING_DESCRIPTION', 'a.warning_description', $listDirn, $listOrder); ?>
 				</th>
-				<th class='left'>
+				<th class='left' >
 				<?php echo JHtml::_('grid.sort',  'COM_BTS_WARNINGS_DEVICE', 'a.device', $listDirn, $listOrder); ?>
 				</th>
 				<th class='left'>
@@ -217,6 +219,10 @@ if (!empty($this->extra_sidebar)) {
 					<?php echo $item->network; ?>
 				</td>
 				<td>
+
+					<?php echo $item->bsc_name; ?>
+				</td>
+				<td>
 				<?php if (isset($item->checked_out) && $item->checked_out) : ?>
 					<?php echo JHtml::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'warnings.', $canCheckin); ?>
 				<?php endif; ?>
@@ -301,3 +307,4 @@ if (!empty($this->extra_sidebar)) {
 	</div>
 </form>        
 
+		
