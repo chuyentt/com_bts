@@ -164,7 +164,7 @@ class BtsModelWarnings extends JModelList {
                 $query->where('a.id = ' . (int) substr($search, 3));
             } else {
                 $search = $db->Quote('%' . $db->escape($search, true) . '%');
-                $query->where('( a.station_id LIKE '.$search.'  OR  a.warning_description LIKE '.$search.' )');
+                $query->where('( a.station_id LIKE '.$search.'  OR  a.warning_description LIKE '.$search.' OR #__bts_station_986074.bsc_name LIKE '.$search.' )');
             }
         }
 
