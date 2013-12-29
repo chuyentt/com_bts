@@ -5,36 +5,6 @@
         <fieldset 
             name="request"
             label="COM_VNPBTSNODEB_FIELDSET_ITEM_ID_SELECT_LABEL">
-
-            <field
-                name="mapwidth"
-                type="text"
-                label="Map width"
-                description="Set map with, set 0 for default"
-                size="10"
-                class="inputbox"
-                required="true"
-                default="" />
-
-            <field
-                name="mapheight"
-                type="text"
-                label="Map height"
-                description="Set map with, set 0 for default"
-                size="10"
-                class="inputbox"
-                required="true"
-                default="" />
-                
-            <field
-                name="limitstart"
-                type="text"
-                label="Limit start"
-                description="Set limit start per page, set 0 for default"
-                size="10"
-                class="inputbox"
-                required="true"
-                default="" />
             <field
                 name="limit"
                 type="text"
@@ -44,7 +14,6 @@
                 class="inputbox"
                 required="true"
                 default="" />
-
         </fieldset>
     </fields>
 </metadata>
