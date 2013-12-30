@@ -72,7 +72,10 @@ class BtsModelNotes extends JModelList {
                         'list.select', 'a.*'
                 )
         );
-
+		
+		$query->select("DATE_FORMAT(a.created_time, '%d-%m-%Y %H:%i:%s') AS created_time");
+		$query->select("DATE_FORMAT(a.approved_time, '%d-%m-%Y %H:%i:%s') AS approved_time");
+		 
         $query->from('`#__bts_note` AS a');
 
         $station_id = JFactory::getApplication()->input->get('station_id');
@@ -103,8 +106,6 @@ class BtsModelNotes extends JModelList {
                 $query->where('( a.note LIKE '.$search.' )');
             }
         }
-
-        
 
 		//Filtering station_id
 		$filter_station_id = $this->state->get("filter.station_id");

@@ -94,6 +94,7 @@
 	color:#D93600;
 }
 
+#notesHistory,
 #warningHistory {
 	width:100%;
 	height:100%;
@@ -104,6 +105,7 @@
 	left:0;
 	z-index:2;
 }
+#notesHistoryLoading,
 #warningHistoryLoading {
 	position:absolute;
 	top:50%;
@@ -111,11 +113,13 @@
 	z-index:3;
 }
 
+#tblNotesList th,
 #tblWarningList th {
 	color:#333;
 	background:none;
 	border-bottom:2px solid #ccc;
 }
+#tblNotesList select,
 #tblWarningList select {
 	width:100px;
 }

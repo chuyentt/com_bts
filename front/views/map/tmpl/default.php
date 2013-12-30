@@ -131,6 +131,8 @@ jQuery( document ).ready(function( $ ) {
 								$('#tblWarningList tbody').empty();
 								$('#warningHistory').hide();
 								$('#warningListStationID').val('');
+								$('#tblNotesList tbody').empty();
+								$('#notesHistory').hide();
                                 $(this).dialog('close');
                                 return false; 
                             }
@@ -442,6 +444,67 @@ jQuery( document ).ready(function( $ ) {
 				}
 			}
 			station.getMoreInfo(marker.bts_id);
+			
+			// add Event for viewing notes
+			$('#btnViewNotes').off('click');
+			$('#btnViewNotes').on('click', function() {
+				$('#notesHistory').show();
+				$('#notesHistoryLoading').show();
+				
+				// update dialog title
+				dialog.dialog('option', 'title', '<?php echo JText::_('COM_BTS_TITLE_STATION_DETAILS'); ?>: ' + marker.bts_name + ' ' + marker.network + ' - <?php echo JText::_('COM_BTS_TITLE_LIST_VIEW_NOTES'); ?>');
+				
+				// add Back button
+				if ($('#btnBackWarningList').length==0) {
+					var btnBack = $('<button/>', {
+						type: 'button',
+						'class':'ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only',
+						id: 'btnBackWarningList',
+						role: 'button',
+						'aria-disabled': 'false',
+						html: '<span class="ui-button-text">Quay lại</span>'
+					});
+					btnBack.on('click', function() {
+						$('#tblNotesList tbody').empty();
+						$('#notesHistory').hide();
+						$('#notesListStationID').val('');
+						dialog.dialog('option', 'title', '<?php echo JText::_('COM_BTS_TITLE_STATION_DETAILS'); ?>: ' + marker.bts_name + ' ' + marker.network);
+						$(this).remove();
+					});
+					$('.ui-dialog-buttonset').prepend(btnBack);
+				}
+				
+				// get warning list
+				$.ajax({
+					type: "GET",
+					dataType: 'json',
+					url: '<?php echo JURI::root(); ?>index.php?option=com_bts&view=notes&format=json&station_id='+marker.bts_id,
+					success: function(data) {
+						$('#notesHistoryLoading').hide();
+						console.log(data); 
+						$.each(data, function(index, item) {
+							var tdNote = $('<td/>', {text: item.note});
+							var tdCreatedBy = $('<td/>', {text: item.created_by});
+							var tdCreatedTime = $('<td/>', {text: item.created_time});
+							var tdApprovedBy = $('<td/>', {text: item.approved_by});
+							var tdApprovedTime = $('<td/>', {text: item.approved_time});
+							var tdState = $('<td/>', {'class':'center', html: btsHelper.getCheckbox('note_approval_'+item.id, item.approved, 0)});
+							$('#tblNotesList tbody').append(
+								$('<tr/>')
+									.append(tdNote)
+									.append(tdCreatedBy)
+									.append(tdCreatedTime)
+									.append(tdState)
+									.append(tdApprovedBy)
+									.append(tdApprovedTime)
+							)
+						});
+					},
+					error: function() {
+						// console.log('no no no'); 
+					}
+				});
+			});
 			
 			// add Event for viewing history
 			$('#btnViewHistory').off('click');
@@ -776,6 +839,10 @@ jQuery( document ).ready(function( $ ) {
         <div class="span4"><?php echo JText::_('COM_BTS_FORM_LBL_STATION_WARNING'); ?></div>
         <div class="span8"><span id="frm_station_level"></span> - <a href="javascript:void(0)" id="btnViewHistory"><?php echo JText::_('COM_BTS_FORM_LBL_STATION_WARNING_HISTORY'); ?></a></div>
     </div>
+	<div class="row-fluid">
+        <div class="span4"><?php echo JText::_('COM_BTS_TITLE_LIST_VIEW_NOTES'); ?></div>
+        <div class="span8"><a href="javascript:void(0)" id="btnViewNotes"><?php echo JText::_('COM_BTS_NOTES_VIEW_HISTORY'); ?></a></div>
+    </div>
 	<div class="row-fluid"  id="frm_station_duplicate">
         <div class="span4"><?php echo JText::_('COM_BTS_FORM_LBL_STATION_DUPLICATE'); ?></div>
         <div class="span8"></div>
@@ -806,6 +873,27 @@ jQuery( document ).ready(function( $ ) {
 		</form>
 	</div>
 	
+	<div id="notesHistory">
+		<div id="notesHistoryLoading"><img src="<?php echo $assetUrl.'images/loading.gif'; ?>" alt="" /></div>
+		<form action="#" id="frmNotesList">
+			<table class="table table-hover" id="tblNotesList">
+				<thead>
+					<tr>
+						<th><a href="javascript:void(0)" title="<?php echo JText::_('COM_BTS_STATIONS_NOTE'); ?>"><?php echo JText::_('COM_BTS_STATIONS_NOTE'); ?></a></th>
+						<th><a href="javascript:void(0)" title="<?php echo JText::_('COM_BTS_NOTES_CREATED_BY'); ?>"><?php echo JText::_('COM_BTS_NOTES_CREATED_BY'); ?></a> </th>
+						<th><a href="javascript:void(0)" title="<?php echo JText::_('COM_BTS_NOTES_CREATED_TIME'); ?>"><?php echo JText::_('COM_BTS_NOTES_CREATED_TIME'); ?></a> </th>
+						<th class="center"><a href="javascript:void(0)" title="<?php echo JText::_('COM_BTS_NOTES_APPROVED'); ?>"><?php echo JText::_('COM_BTS_NOTES_APPROVED'); ?></a> </th>
+						<th><a href="javascript:void(0)" title="<?php echo JText::_('COM_BTS_NOTES_APPROVED_BY'); ?>"><?php echo JText::_('COM_BTS_NOTES_APPROVED_BY'); ?></a> </th>
+						<th><a href="javascript:void(0)" title="<?php echo JText::_('COM_BTS_NOTES_APPROVED_TIME'); ?>"><?php echo JText::_('COM_BTS_NOTES_APPROVED_TIME'); ?></a> </th>
+					</tr>
+				</thead>
+				<tbody>
+					
+				</tbody>
+			</table>
+			<input type="hidden" name="station_id" id="notesListStationID" />
+		</form>
+	</div>
 </div>
 
 <!--
