@@ -46,9 +46,9 @@ class BtsTablewarning extends JTable {
 	if(($task == 'apply' || $task == 'save') && (!JFactory::getUser()->authorise('core.delete','com_bts')) && $array['approve_state'] == 1){
 		$array['approve_state'] = 0;
 	}
-	if(($task == 'apply' || $task == 'save') && (!JFactory::getUser()->authorise('core.edit.state','com_bts')) && $array['maintenance_state'] == 1){
+	if(($task == 'apply' || $task == 'save') && (!JFactory::getUser()->authorise('core.edit','com_bts')) && $array['maintenance_state'] == 1){
 		$array['maintenance_state'] = 0;
-	}	
+	}
 	if ($array['maintenance_state'] == 1) {
 		$maintenance_time = date("Y-m-d H:i:s");
 		$array['maintenance_time'] = $maintenance_time;
@@ -58,6 +58,15 @@ class BtsTablewarning extends JTable {
 		$approve_time = date("Y-m-d H:i:s");
 		$array['approve_time'] = $approve_time;
 		$array['approve_by'] = JFactory::getUser()->id;
+	}
+	if($task == 'save2copy'){
+		$array['warning_time'] = date("Y-m-d H:i:s");
+		$array['maintenance_state'] = NULL;	
+		$array['maintenance_by'] = NULL;
+		$array['maintenance_time'] = date("0000-00-00 00:00:00");
+		$array['approve_by'] = NULL;
+		$array['approve_time'] = date("0000-00-00 00:00:00");
+		$array['approve_state'] = NULL;
 	}
 	//Support for multiple or not foreign key field: station_id
 	if(isset($array['station_id'])){

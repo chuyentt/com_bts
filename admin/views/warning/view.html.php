@@ -61,11 +61,11 @@ class BtsViewWarning extends JViewLegacy
 		if (!$checkedOut && ($canDo->get('core.edit')||($canDo->get('core.create'))))
 		{
 
-			JToolBarHelper::apply('warning.apply', 'JTOOLBAR_APPLY');
-			JToolBarHelper::save('warning.save', 'JTOOLBAR_SAVE');
+			//JToolBarHelper::apply('warning.apply', 'JTOOLBAR_APPLY');
+			//JToolBarHelper::save('warning.save', 'JTOOLBAR_SAVE');
 		}
 		if (!$checkedOut && ($canDo->get('core.create'))){
-			JToolBarHelper::custom('warning.save2new', 'save-new.png', 'save-new_f2.png', 'JTOOLBAR_SAVE_AND_NEW', false);
+			//JToolBarHelper::custom('warning.save2new', 'save-new.png', 'save-new_f2.png', 'JTOOLBAR_SAVE_AND_NEW', false);
 		}
 		// If an existing item, can save to a copy.
 		if (!$isNew && $canDo->get('core.create')) {
