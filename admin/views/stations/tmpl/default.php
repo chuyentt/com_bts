@@ -120,7 +120,7 @@ if (!empty($this->extra_sidebar)) {
 				<?php echo JHtml::_('grid.sort',  'COM_BTS_STATIONS_ADDRESS', 'a.address', $listDirn, $listOrder); ?>
 				</th>
 				<th class='left nowrap'>
-				<?php echo JHtml::_('grid.sort',  'COM_BTS_WARNINGS_LEVEL', 'a.warning_level', $listDirn, $listOrder); ?>
+				<?php echo JHtml::_('grid.sort',  'COM_BTS_WARNINGS_LEVEL', 'wm.warning_level', $listDirn, $listOrder); ?>
 				</th>
 				</th>
 				<th class='left nowrap'>

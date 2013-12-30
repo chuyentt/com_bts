@@ -64,6 +64,7 @@ class BtsModelStations extends JModelList {
                 'caremanagement', 'a.caremanagement',
                 'backlog', 'a.backlog',
                 'note', 'a.note',
+                'level', 'wm.warning_level'
 
             );
         }
