@@ -28,6 +28,12 @@ $warningLevelText = array(
 	1 => JText::_('COM_BTS_TITLE_MAP_FILTER_WARNING_LEVEL_WARNING'),
 	2 => JText::_('COM_BTS_TITLE_MAP_FILTER_WARNING_LEVEL_DANGE')
 );
+
+$iconWarningStates = array(
+	0	=> JURI::root().'administrator/templates/vinaphone_admin/images/admin/upgrade_cross.png',
+	1	=> JURI::root().'administrator/templates/vinaphone_admin/images/admin/upgrade_tick.png'
+)
+
 ?>
 
 <link rel="stylesheet" href="<?php echo $assetUrl.'css/vnpbts.css'; ?>" />
@@ -80,6 +86,7 @@ jQuery( document ).ready(function( $ ) {
 	var center = new google.maps.LatLng(21.029071,105.855761);
 	var data = <?php echo json_encode($this->items); ?>;
 	var warningLevelText = <?php echo json_encode($warningLevelText); ?>;
+	var iconWarningStates = <?php echo json_encode($iconWarningStates); ?>;
 	var addressData = [];
 	$.each( data, function(i, markerData) {
 		addressData.push({label: markerData.bts_name+' '+markerData.address, value: markerData.bts_name});
@@ -529,7 +536,7 @@ jQuery( document ).ready(function( $ ) {
 						$('#tblWarningList tbody').empty();
 						$('#warningHistory').hide();
 						$('#warningListStationID').val('');
-						if ($('#btnSaveWarningList').length!=0) $('#btnSaveWarningList').remove();
+						// if ($('#btnSaveWarningList').length!=0) $('#btnSaveWarningList').remove();
 						dialog.dialog('option', 'title', '<?php echo JText::_('COM_BTS_TITLE_STATION_DETAILS'); ?>: ' + marker.bts_name + ' ' + marker.network);
 						$(this).remove();
 					});
@@ -537,6 +544,7 @@ jQuery( document ).ready(function( $ ) {
 				}
 				
 				// add Save button
+				/*
 				if ($('#btnSaveWarningList').length==0) {
 					var btnSave = $('<button/>', {
 						type: 'button',
@@ -570,6 +578,7 @@ jQuery( document ).ready(function( $ ) {
 					});
 					$('.ui-dialog-buttonset').prepend(btnSave);
 				}
+				*/
 				
 				// set ID for station in warning list form
 				$('#warningListStationID').val(marker.bts_id);
@@ -586,7 +595,9 @@ jQuery( document ).ready(function( $ ) {
 							var tdID = $('<td/>', {text: item.id});
 							var tdLevel = $('<td/>', {html: '<span class="warning'+item.level+'">'+warningLevelText[item.level]+'</span>'});
 							var tdDesc = $('<td/>', {text: item.warning_description});
-							var tdMtState = $('<td/>', {html: btsHelper.warningStateCb(item.id, item.maintenance_state, <?php echo $canMaintenance; ?>)});
+							// var tdMtState = $('<td/>', {html: btsHelper.warningStateCb(item.id, item.maintenance_state, <?php echo $canMaintenance; ?>)});
+							var tdMtState = $('<td/>', {html: '<img src="'+iconWarningStates[item.maintenance_state]+'" alt="'+item.maintenance_state+'" />'});
+							var tdApState = $('<td/>', {html: '<img src="'+iconWarningStates[item.approve_state]+'" alt="'+item.approve_state+'" />'});
 							var tdMtBy = $('<td/>', {text: item.maintenance_by});
 							var tdMtTime = $('<td/>', {text: item.maintenance_time});
 							var tdApBy = $('<td/>', {text: item.approve_by});
@@ -599,6 +610,7 @@ jQuery( document ).ready(function( $ ) {
 									.append(tdMtState)
 									.append(tdMtBy)
 									.append(tdMtTime)
+									.append(tdApState)
 									.append(tdApBy)
 									.append(tdApTime)
 							)
@@ -856,11 +868,12 @@ jQuery( document ).ready(function( $ ) {
 				<thead>
 					<tr>
 						<th><a href="javascript:void(0)">ID</a></th>
-						<th><a href="javascript:void(0)" title="<?php echo JText::_('COM_BTS_WARNINGS_LEVEL'); ?>">Level</a></th>
+						<th><a href="javascript:void(0)" title="<?php echo JText::_('COM_BTS_WARNINGS_LEVEL'); ?>"><?php echo JText::_('COM_BTS_FORM_LBL_STATION_WARNING'); ?></a></th>
 						<th><a href="javascript:void(0)" title="<?php echo JText::_('COM_BTS_WARNINGS_WARNING_DESCRIPTION'); ?>">Mô tả</a> </th>
-						<th><a href="javascript:void(0)" title="">Trạng thái</a> </th>
+						<th><a href="javascript:void(0)" title="<?php echo JText::_('COM_BTS_FORM_DESC_WARNING_MAINTENANCE_STATE'); ?>">TT KP</a> </th>
 						<th><a href="javascript:void(0)" title="<?php echo JText::_('COM_BTS_WARNINGS_MAINTENANCE_BY'); ?>">KP</a></th>
 						<th><a href="javascript:void(0)" title="<?php echo JText::_('COM_BTS_WARNINGS_MAINTENANCE_TIME'); ?>">TG KP</a></th>
+						<th><a href="javascript:void(0)" title="<?php echo JText::_('COM_BTS_FORM_DESC_WARNING_APPROVE_STATE'); ?>">TT XN</a></th>
 						<th><a href="javascript:void(0)" title="<?php echo JText::_('COM_BTS_WARNINGS_APPROVE_BY'); ?>">XN</a></th>
 						<th><a href="javascript:void(0)" title="<?php echo JText::_('COM_BTS_WARNINGS_APPROVE_TIME'); ?>">TG XN</a></th>
 					</tr>

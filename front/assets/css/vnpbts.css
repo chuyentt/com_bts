@@ -118,6 +118,7 @@
 	color:#333;
 	background:none;
 	border-bottom:2px solid #ccc;
+	white-space: nowrap;
 }
 #tblNotesList select,
 #tblWarningList select {
