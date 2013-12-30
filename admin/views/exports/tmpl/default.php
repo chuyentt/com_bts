@@ -30,6 +30,7 @@ $document->addStyleSheet('components/com_bts/assets/css/bts.css');
 		<div class="row-fluid">
 			<input class="btn btn-success" id="btn-station" type="button" value="<?php echo JText::_('COM_BTS_FORM_BTN_EXPORTS_STATION'); ?>" />
 			<input class="btn btn-warning" id="btn-warning" type="button" value="<?php echo JText::_('COM_BTS_FORM_BTN_EXPORTS_WARNING'); ?>" />
+			<input class="btn btn-primary" id="btn-note" type="button" value="<?php echo JText::_('COM_BTS_FORM_BTN_EXPORTS_NOTE'); ?>" />
 			
 			<?php if ($this->exported) { ?>
 				<br>
@@ -47,5 +48,6 @@ $document->addStyleSheet('components/com_bts/assets/css/bts.css');
 	(function($){
 		$('#btn-warning').click(function() {$('#task_type').val('warning');$( "#station-form" ).submit();});
 		$('#btn-station').click(function() {$('#task_type').val('station');$( "#station-form" ).submit();});
+		$('#btn-note').click(function() {$('#task_type').val('note');$( "#station-form" ).submit();});
 	})(jQuery);
 </script>

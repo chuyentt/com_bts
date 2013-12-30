@@ -12,6 +12,8 @@ defined('_JEXEC') or die;
 /**
  * Methods supporting a list of Bts records.
  */
+jimport('joomla.application.component.helper');
+ 
 class BtsModelExports extends JModelLegacy {
 
 	/**
@@ -39,8 +41,6 @@ class BtsModelExports extends JModelLegacy {
 			require_once JPATH_COMPONENT.'/helpers/bts.php';
 			require_once JPATH_COMPONENT_ADMINISTRATOR.DIRECTORY_SEPARATOR.'helpers'.DIRECTORY_SEPARATOR.'PHPExcel'.DIRECTORY_SEPARATOR.'PHPExcel.php';
 			$db = JFactory::getDbo();
-				
-			
 			
 			$objPHPExcel = new PHPExcel();
 			$excelColumns = array('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','AA','AB','AC','AD','AE','AF','AG','AH','AI','AJ','AK','AL','AM','AN','AO','AP','AQ','AR','AS','AT','AU','AV','AW','AX','AY','AZ');
@@ -61,19 +61,51 @@ class BtsModelExports extends JModelLegacy {
 				$extraFields = array('state');
 			
 				// get data of stations
-				$query = "SELECT * FROM #__bts_station";
+				$query = "SELECT * FROM #__bts_station AS a";
 				$db->setQuery($query);
 				$data = $db->loadObjectList();
-			} else {
+			} elseif ($this->_type == 'warning') {
 				// set more exported fields
 				$extraFields = array('state','level','maintenance_by','maintenance_time','approve_by','approve_time','maintenance_state','approve_state');
 				
+				// get condition by time
+				$timeWhere = array();
+				$from = JComponentHelper::getParams('com_bts')->get('export_warning_from');
+				$to = JComponentHelper::getParams('com_bts')->get('export_warning_to');
+				if ($from && $from != '0000-00-00')$timeWhere[] = "a.warning_time >= '".$from."' ";
+				if ($to && $to != '0000-00-00') $timeWhere[] = "a.warning_time <= '".$to."' ";
+				
 				// get data for warning
-				$query = "SELECT warning.*, station.bts_name, station.network ".
-						" FROM #__bts_warning AS warning ".
-						" LEFT JOIN #__bts_station AS station ON station.id = warning.station_id".
-						" ORDER BY bts_name"
+				$query = "SELECT a.*, station.bts_name, station.network, ".
+						" DATE_FORMAT(a.warning_time, '%d-%m-%Y %H:%i:%s') AS warning_time, DATE_FORMAT(a.maintenance_time, '%d-%m-%Y %H:%i:%s') AS maintenance_time, DATE_FORMAT(a.approve_time, '%d-%m-%Y %H:%i:%s') AS approve_time ".
+						" FROM #__bts_warning AS a ".
+						" LEFT JOIN #__bts_station AS station ON station.id = a.station_id"
 				;
+				if (count($timeWhere)) $query .= ' WHERE '.implode(' AND ', $timeWhere);
+				$query .= " ORDER BY a.warning_time";
+				$db->setQuery($query);
+				$data = $db->loadObjectList();
+			} elseif ($this->_type == 'note') {
+				$extraFields = array('state','bts_name','network');
+				
+				// get condition by time
+				$timeWhere = array();
+				$from = JComponentHelper::getParams('com_bts')->get('export_notes_from');
+				$to = JComponentHelper::getParams('com_bts')->get('export_notes_to');
+				if ($from && $from != '0000-00-00')$timeWhere[] = "a.created_time >= '".$from."' ";
+				if ($to && $to != '0000-00-00') $timeWhere[] = "a.created_time <= '".$to."' ";
+				
+				// get data for note
+				$query = "SELECT a.*, station.bts_name, station.network, ".
+						" DATE_FORMAT(a.created_time, '%d-%m-%Y %H:%i:%s') AS created_time, DATE_FORMAT(a.approved_time, '%d-%m-%Y %H:%i:%s') AS approved_time, ".
+						" created_by.name AS created_by, approved_by.name AS approved_by  ".
+						" FROM #__bts_note AS a ".
+						" LEFT JOIN #__bts_station AS station ON station.id = a.station_id".
+						" LEFT JOIN #__users AS created_by ON created_by.id = a.created_by".
+						" LEFT JOIN #__users AS approved_by ON approved_by.id = a.approved_by"
+				;
+				if (count($timeWhere)) $query .= ' WHERE '.implode(' AND ', $timeWhere);
+				$query .= " ORDER BY a.created_time";
 				$db->setQuery($query);
 				$data = $db->loadObjectList();
 			}

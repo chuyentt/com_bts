@@ -221,7 +221,23 @@
 			label="COM_BTS_EXPORT_WARNING_TO_LABEL"
 			description="COM_BTS_EXPORT_WARNING_TO_DESC"
 			format="%Y-%m-%d" filter="safehtml">
-		</field>		
+		</field>
+		<field name="export_notes_from"
+			type="calendar"
+			class="inputbox"
+			default="0000-00-00"
+			label="COM_BTS_EXPORT_NOTES_FROM_LABEL"
+			description="COM_BTS_EXPORT_NOTES_FROM_DESC"
+			format="%Y-%m-%d" filter="safehtml">
+		</field>
+		<field name="export_notes_to"
+			type="calendar"
+			class="inputbox"
+			default="0000-00-00"
+			label="COM_BTS_EXPORT_NOTES_TO_LABEL"
+			description="COM_BTS_EXPORT_NOTES_TO_DESC"
+			format="%Y-%m-%d" filter="safehtml">
+		</field>
 	</fieldset>
 
 	<fieldset name="permissions" description="JCONFIG_PERMISSIONS_DESC" label="JCONFIG_PERMISSIONS_LABEL">
