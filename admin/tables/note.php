@@ -51,7 +51,14 @@ class BtsTablenote extends JTable {
 			$array['approved_time'] = date("Y-m-d H:i:s");
 			$array['approved_by'] = JFactory::getUser()->id;
 		}
-
+		if(($task == 'remove' || $task == 'delete') && (JFactory::getUser()->authorise('core.delete','com_bts'))){
+			$activity = file_get_contents(JURI::root(false, '/index.php?option=com_bts&view=note&format=json&id=' . $array['id']));
+			$log = new stdClass();
+			$log->created_time = date("Y-m-d H:i:s");
+			$log->author = JFactory::getUser()->id;
+			$log->activity='deleted note: ' . $activity;
+			$result = JFactory::getDbo()->insertObject('#__bts_log', $log);
+		}
 		//Support for multiple or not foreign key field: station_id
 			if(isset($array['station_id'])){
 				if(is_array($array['station_id'])){
