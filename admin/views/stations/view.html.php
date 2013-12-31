@@ -102,7 +102,8 @@ class BtsViewStations extends JViewLegacy
 		    }
         }
 
-		if ($canDo->get('core.admin')) {
+		if ($canDo->get('core.admin', 'com_bts')) {
+		    JToolBarHelper::divider();
 			JToolBarHelper::preferences('com_bts');
 		}
         

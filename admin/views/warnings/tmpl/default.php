@@ -239,7 +239,7 @@ if (!empty($this->extra_sidebar)) {
 				</td>
 				<td>
 
-					<?php echo $item->level; ?>
+					<?php echo BtsHelper::getWarningLevel($item->level); ?>
 				</td>
 				<td>
 

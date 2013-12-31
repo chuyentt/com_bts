@@ -157,6 +157,7 @@ class BtsHelper
 			2 => JText::_('COM_BTS_TITLE_MAP_FILTER_WARNING_LEVEL_DANGE'),
 			3 => JText::_('COM_BTS_TITLE_MAP_FILTER_WARNING_LEVEL_VERY_DANGE')
 		);
+		if ($key == '') return '';
 		if ($key != null) return $warningLevelText[$key];
 			else return $warningLevelText;
 	}
