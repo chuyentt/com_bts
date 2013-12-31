@@ -59,6 +59,7 @@ class BtsModelExports extends JModelLegacy {
 			$fields = BtsHelper::validateWarningFields('', $this->_type, true);
 			if ($this->_type == 'station') {
 				$extraFields = array('state');
+				$removedFields = array();
 			
 				// get data of stations
 				$query = "SELECT * FROM #__bts_station AS a";
@@ -67,6 +68,7 @@ class BtsModelExports extends JModelLegacy {
 			} elseif ($this->_type == 'warning') {
 				// set more exported fields
 				$extraFields = array('state','level','maintenance_by','maintenance_time','approve_by','approve_time','maintenance_state','approve_state');
+				$removedFields = array('vnp','bts_no');
 				
 				// get condition by time
 				$timeWhere = array();
@@ -76,17 +78,27 @@ class BtsModelExports extends JModelLegacy {
 				if ($to && $to != '0000-00-00') $timeWhere[] = "a.warning_time <= '".$to."' ";
 				
 				// get data for warning
-				$query = "SELECT a.*, station.bts_name, station.network, ".
+				$query = "SELECT a.*, station.bts_name, station.network, station.bsc_name, ".
+						" maintenance_by.name AS maintenance_by, approve_by.name AS approve_by,  ".
 						" DATE_FORMAT(a.warning_time, '%d-%m-%Y %H:%i:%s') AS warning_time, DATE_FORMAT(a.maintenance_time, '%d-%m-%Y %H:%i:%s') AS maintenance_time, DATE_FORMAT(a.approve_time, '%d-%m-%Y %H:%i:%s') AS approve_time ".
 						" FROM #__bts_warning AS a ".
-						" LEFT JOIN #__bts_station AS station ON station.id = a.station_id"
+						" LEFT JOIN #__bts_station AS station ON station.id = a.station_id".
+						" LEFT JOIN #__users AS maintenance_by ON maintenance_by.id = a.maintenance_by".
+						" LEFT JOIN #__users AS approve_by ON approve_by.id = a.approve_by"
 				;
 				if (count($timeWhere)) $query .= ' WHERE '.implode(' AND ', $timeWhere);
 				$query .= " ORDER BY a.warning_time";
 				$db->setQuery($query);
 				$data = $db->loadObjectList();
+				
+				// convert data before exporting
+				foreach ($data as &$item) {
+					$item->level = BtsHelper::getWarningLevel($item->level);
+				}
+				
 			} elseif ($this->_type == 'note') {
 				$extraFields = array('state','bts_name','network');
+				$removedFields = array();
 				
 				// get condition by time
 				$timeWhere = array();
@@ -112,6 +124,7 @@ class BtsModelExports extends JModelLegacy {
 			
 			$newFields = array_merge($extraFields, $fields);
 			$fields = $newFields;
+			$fields = array_diff($fields, $removedFields);
 			
 			// set header for sheet
 			foreach ($fields as $key => $col) {

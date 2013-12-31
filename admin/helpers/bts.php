@@ -139,4 +139,15 @@ class BtsHelper
 			. JHtml::_('image', 'admin/' . $img, $alt, null, true) . '</a>';
 		}
 	}
+	
+	public static function getWarningLevel($key='') {
+		$warningLevelText = array(
+			0 => JText::_('COM_BTS_TITLE_MAP_FILTER_WARNING_LEVEL_NORMAL'),
+			1 => JText::_('COM_BTS_TITLE_MAP_FILTER_WARNING_LEVEL_WARNING'),
+			2 => JText::_('COM_BTS_TITLE_MAP_FILTER_WARNING_LEVEL_DANGE'),
+			3 => JText::_('COM_BTS_TITLE_MAP_FILTER_WARNING_LEVEL_VERY_DANGE')
+		);
+		if ($key != null) return $warningLevelText[$key];
+			else return $warningLevelText;
+	}
 }
