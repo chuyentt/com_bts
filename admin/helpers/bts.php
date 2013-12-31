@@ -145,7 +145,12 @@ class BtsHelper
 		}
 	}
 	
-	public static function getWarningLevel($key='') {
+	/**
+	 * return text of warning level 
+	 *
+	 * @return	String, Array
+	 */
+	public static function getWarningLevel($key=null) {
 		$warningLevelText = array(
 			0 => JText::_('COM_BTS_TITLE_MAP_FILTER_WARNING_LEVEL_NORMAL'),
 			1 => JText::_('COM_BTS_TITLE_MAP_FILTER_WARNING_LEVEL_WARNING'),

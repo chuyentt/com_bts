@@ -23,12 +23,6 @@ if ($canApproval) $canMaintenance = 1;
 $canEdit = JFactory::getUser()->authorise('core.edit', 'com_bts');
 $userID = JFactory::getUser()->id;
 
-$warningLevelText = array(
-	0 => JText::_('COM_BTS_TITLE_MAP_FILTER_WARNING_LEVEL_NORMAL'),
-	1 => JText::_('COM_BTS_TITLE_MAP_FILTER_WARNING_LEVEL_WARNING'),
-	2 => JText::_('COM_BTS_TITLE_MAP_FILTER_WARNING_LEVEL_DANGE')
-);
-
 $iconWarningStates = array(
 	0	=> JURI::root().'administrator/templates/vinaphone_admin/images/admin/upgrade_cross.png',
 	1	=> JURI::root().'administrator/templates/vinaphone_admin/images/admin/upgrade_tick.png'
@@ -85,7 +79,7 @@ jQuery( document ).ready(function( $ ) {
 
 	var center = new google.maps.LatLng(21.029071,105.855761);
 	var data = <?php echo json_encode($this->items); ?>;
-	var warningLevelText = <?php echo json_encode($warningLevelText); ?>;
+	var warningLevelText = <?php echo json_encode(BtsHelper::getWarningLevel()); ?>;
 	var iconWarningStates = <?php echo json_encode($iconWarningStates); ?>;
 	var addressData = [];
 	$.each( data, function(i, markerData) {
@@ -755,6 +749,7 @@ jQuery( document ).ready(function( $ ) {
                                             <option value="0"><?php echo JText::_('COM_BTS_TITLE_MAP_FILTER_WARNING_LEVEL_NORMAL'); ?></option>
                                             <option value="1"><?php echo JText::_('COM_BTS_TITLE_MAP_FILTER_WARNING_LEVEL_WARNING'); ?></option>
                                             <option value="2"><?php echo JText::_('COM_BTS_TITLE_MAP_FILTER_WARNING_LEVEL_DANGE'); ?></option>
+											<option value="3"><?php echo JText::_('COM_BTS_TITLE_MAP_FILTER_WARNING_LEVEL_VERY_DANGE'); ?></option>
                                         </select>
                                     </div>
                                     <div class="row-fluid">

@@ -127,6 +127,8 @@ class BtsModelMap extends JModelList {
 				$item->icon_url = JURI::root().'components/com_bts/assets/images/marker_yellow.png';
 			} elseif ($item->level == 2) {
 				$item->icon_url = JURI::root().'components/com_bts/assets/images/marker_orange.png';
+			} elseif ($item->level == 3) {
+				$item->icon_url = JURI::root().'components/com_bts/assets/images/marker_red.png';
 			} else {
 				$item->level = 0;
 				$item->icon_url = JURI::root().'components/com_bts/assets/images/marker_green.png';
