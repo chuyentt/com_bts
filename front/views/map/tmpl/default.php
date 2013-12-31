@@ -35,8 +35,10 @@ $iconWarningStates = array(
 <!--
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyA4znz5H6T2NKskWfIW6e0ve_g38Gg_NiM&sensor=true&language=vi"></script>
 -->
-<script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyBlW40FBESAIH0sOGTFZSnB2xsXuBUxGPA&sensor=true&language=vi"></script>
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyBlW40FBESAIH0sOGTFZSnB2xsXuBUxGPA&sensor=true&language=vi&libraries=geometry"></script>
+<!--
 <script type="text/javascript" src="<?php echo $assetUrl.'js/jquery-1.9.1.js'; ?> "></script>
+-->
 <script type="text/javascript" src="<?php echo $assetUrl.'js/jquery-ui-1.10.3.custom.min.js'; ?> "></script>
 <script type="text/javascript" src="<?php echo $assetUrl.'js/jquery.ui.map.min.js'; ?> "></script>
 <script type="text/javascript" src="<?php echo $assetUrl.'js/jquery.ui.map.services.min.js'; ?> "></script>
@@ -229,50 +231,38 @@ jQuery( document ).ready(function( $ ) {
 				marker.setVisibleLabel(checked);
 			});
 		});
-        
-        // find direction from any 2 points
-        $('#btn_points').click(function() {
-            var pointNo = 0;
-            google.maps.event.addListener(map, 'click', function(event) {
-                if (pointNo<2) {
-                    self.addMarker({
-                        icon        : '<?php echo JURI::root(); ?>components/com_bts/assets/images/point.png',
-                        position    : event.latLng, 
-                        draggable   : true, 
-                        bounds      : false
-                    }, function(map, marker) {
-                        pointNo++;
-                        if (pointNo==2)
-                        findLocation(marker.getPosition(), marker);
-                    })
-                    .dragend( function(event) {
-                        findLocation(event.latLng, this);
-                    });
-                }
-            });
-            /*
-            $(map)
-                .click(function(event) {
-                    self.addMarker({
-                        icon        : '<?php echo JURI::root(); ?>components/com_bts/assets/images/point.png',
-                        position    : event.latLng, 
-                        draggable   : true, 
-                        bounds      : false
-                    }, function(map, marker) {
-                        console.log(marker.getPosition()); 
-                        findLocation(marker.getPosition(), marker);
-                    })
-                    .dragend( function(event) {
-                        findLocation(event.latLng, this);
-                    })
-                    ;
-                })
-            ;
-            */
-        });
-        $('#btn_points_clear').click(function() {
-            google.maps.event.clearListeners(map, 'click');
-        });
+		
+		var distancePoints = [];
+		var distanceLine = null;
+		$('#accordion2 .panel-title a').on('click', function() {
+			if ($(this).attr('id') == 'titleMeasureTool') {
+				google.maps.event.addListener(map, 'click', function(event) {
+					if (distancePoints.length<2) {
+						distancePoints.push(
+							self.addMarker({
+								icon        : '<?php echo JURI::root(); ?>components/com_bts/assets/images/point.png',
+								position    : event.latLng, 
+								draggable   : true, 
+								bounds      : false
+							})
+							.dragend( function(event) {
+								getDistance();
+							})
+						)
+					}
+					if (distancePoints.length==2) {
+						getDistance();
+					}
+				});
+			} else {
+				resetDistance();
+				google.maps.event.clearListeners(map, 'click');
+			}
+		});
+		
+		$('#btnMeasureToolReset').on('click', function() {
+			resetDistance();
+		});
 		
 		// filter station
         function filter(reset) {
@@ -307,43 +297,39 @@ jQuery( document ).ready(function( $ ) {
 			});
 			cluster.addMarkers(visibleMarkers);
 		}
-        /*
-        $('#map_canvas').gmap('addMarker', {
-            'position': event.latLng, 
-            'draggable': true, 
-            'bounds': false
-        }, function(map, marker) {
-            $('#dialog').append('<form id="dialog'+marker.__gm_id+'" method="get" action="/" style="display:none;"><p><label for="country">Country</label><input id="country'+marker.__gm_id+'" class="txt" name="country" value=""/></p><p><label for="state">State</label><input id="state'+marker.__gm_id+'" class="txt" name="state" value=""/></p><p><label for="address">Address</label><input id="address'+marker.__gm_id+'" class="txt" name="address" value=""/></p><p><label for="comment">Comment</label><textarea id="comment" class="txt" name="comment" cols="40" rows="5"></textarea></p></form>');
-            findLocation(marker.getPosition(), marker);
-        }).dragend( function(event) {
-            findLocation(event.latLng, this);
-        }).click( function() {
-            openDialog(this);
-        })
-        });
-        */
+		
+		function resetDistance() {
+			for (var i=0; i<distancePoints.length; i++) {
+				distancePoints[i][0].setMap(null);
+			}
+			distanceLine.setMap(null);
+			distancePoints = [];
+			$('#txtMeasureToolResult').text('0');
+		}
+		function getDistance() {
+			if (distancePoints.length == 2) {
+				// set line between 2 points
+				var point1 = distancePoints[0][0];
+				var point2 = distancePoints[1][0];
+				var polyOptions = {
+					strokeColor: '#FF0000',
+					strokeOpacity: 0.6,
+					strokeWeight: 4,
+					map: map,
+				};
+				if (distanceLine != null) distanceLine.setMap(null);
+				distanceLine = new google.maps.Polyline(polyOptions);
+				var path = [point1.position, point2.position];
+				distanceLine.setPath(path);
+				
+				// print distance result
+				$('#txtMeasureToolResult').text((google.maps.geometry.spherical.computeDistanceBetween(point1.position, point2.position)/1000).toFixed(2));
+
+				// console.log('computeLength',google.maps.geometry.spherical.computeLength(path)); 
+				// console.log('computeHeading', google.maps.geometry.spherical.computeHeading(path[0], path[1])); 
+			}
+		}
 	}});
-    
-    function findLocation(location, marker) {
-        $('#map_canvas').gmap('search', {'location': location}, function(results, status) {
-            console.log('marker', marker);
-            /*            
-            if ( status === 'OK' ) {
-                $.each(results[0].address_components, function(i,v) {
-                    if ( v.types[0] == "administrative_area_level_1" || 
-                         v.types[0] == "administrative_area_level_2" ) {
-                        $('#state'+marker.__gm_id).val(v.long_name);
-                    } else if ( v.types[0] == "country") {
-                        $('#country'+marker.__gm_id).val(v.long_name);
-                    }
-                });
-                marker.setTitle(results[0].formatted_address);
-                $('#address'+marker.__gm_id).val(results[0].formatted_address);
-                openDialog(marker);
-            }
-            */
-        });
-    }
 	
 	// helper class for handling BTS data
 	station = {
@@ -794,26 +780,20 @@ jQuery( document ).ready(function( $ ) {
                     <div class="accordion-group">
                         <div class="accordion-heading">
                             <h4 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#accordion2"  href="#collapseFourth">
-                                    <?php echo JText::_('COM_BTS_TITLE_MAP_FILTER_FIND_DIRECTION_ANY'); ?>
+                                <a data-toggle="collapse" data-parent="#accordion2"  href="#collapseFourth" id="titleMeasureTool">
+                                    <?php echo JText::_('COM_BTS_TITLE_MAP_TOOLS_DISTANCE_MEASURE'); ?>
                                 </a>
                             </h4>
                         </div>
                         <div id="collapseFourth" class="accordion-body collapse">
                             <div class="accordion-inner">
-                                <form action="#" id="map_way" class="form-inline">
-                                    <input type="button" value="Start to choose points" id="btn_points" class="btn btn-success" />
-                                    <input type="button" value="Clear and stop find direction" id="btn_points_clear" class="btn btn-warning" />
-                                    <?php echo JText::_('COM_BTS_TITLE_MAP_FILTER_FIND_DIRECTION_ANY_FROM'); ?>
-                                    <br>
-                                    <input type="button" value="Select first point" id="btn_point_1" class="btn btn-success" />
-                                    <input type="hidden" name="p1" id="map_point_1" />
-                                    <br/>
-                                    <?php echo JText::_('COM_BTS_TITLE_MAP_FILTER_FIND_DIRECTION_ANY_TO'); ?>
-                                    <br/>
-                                    <input type="button" value="Select second point" id="btn_point_2" class="btn btn-success" />
-                                    <input type="hidden" name="p2" id="map_point_2" />
-                                </form>
+                                <?php echo JText::_('COM_BTS_TITLE_MAP_TOOLS_DISTANCE_MEASURE_GUIDE'); ?>
+								<h4 class="center">
+									<strong><?php echo JText::_('COM_BTS_TITLE_MAP_TOOLS_DISTANCE_MEASURE_RESULT'); ?> <span id="txtMeasureToolResult">0</span> km</strong>
+								</h4>
+								<div class="pull-right">
+									<input type="button" class="btn btn-warning" id="btnMeasureToolReset" value="<?php echo JText::_('COM_BTS_TITLE_MAP_TOOLS_DISTANCE_MEASURE_RESET'); ?>">
+								</div>
                             </div>
                         </div>
                     </div>
