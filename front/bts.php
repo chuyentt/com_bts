@@ -24,16 +24,18 @@ $username = JRequest::getVar('username', 1);
 $password = JRequest::getVar('password', 1);
 $checking = JRequest::getVar('checking', 2);
 if ($username != 1 && $password != 1 && $checking == 1) {
-    JFactory::getApplication()->login(array('username'=>$username,'password'=>$password),array('remember'=>true));
+    JFactory::getApplication()->login(array('username'=>$username,'password'=>$password),array('remember'=>false));
     $canEdit = JFactory::getUser()->authorise('core.edit.state', 'com_bts');
-    if($canEdit):
+    header('Content-type: application/json');
+    if($canEdit) {
         $json = json_encode(JFactory::getUser());
         $jsonData = json_decode($json,true);
         $jsonData['token'] = JSession::getFormToken();
-        header('Content-type: application/json');
-		echo json_encode($jsonData);
-		JFactory::getApplication()->close();
-    endif;
+        echo json_encode($jsonData);
+    } else {
+        echo json_encode(null,true);
+    }
+    JFactory::getApplication()->close();
 }
 
 // Execute the task.
