@@ -81,3 +81,12 @@ CREATE TABLE IF NOT EXISTS `#__bts_note` (
 `approved` TINYINT(1)  NOT NULL ,
 PRIMARY KEY (`id`)
 ) DEFAULT COLLATE=utf8_general_ci;
+
+CREATE TABLE IF NOT EXISTS `#__bts_log` (
+`id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+
+`created_time` DATETIME NOT NULL ,
+`author` VARCHAR(255)  NOT NULL ,
+`activity` MEDIUMTEXT NOT NULL ,
+PRIMARY KEY (`id`)
+) DEFAULT COLLATE=utf8_general_ci;

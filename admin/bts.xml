@@ -41,7 +41,8 @@
         <submenu>
             <menu link="option=com_bts&amp;view=stations" view="stations" img="components/com_bts/assets/images/s_stations.png" alt="Bts/Stations">COM_BTS_TITLE_STATIONS</menu>
             <menu link="option=com_bts&amp;view=warnings" view="warnings" img="components/com_bts/assets/images/s_warnings.png" alt="Bts/Warnings">COM_BTS_TITLE_WARNINGS</menu>
-            <menu link="option=com_bts&amp;view=notes" view="notes" img="components/com_bts/assets/images/s_notes.png" alt="Bts/Notes">COM_BTS_TITLE_NOTES</menu>          
+            <menu link="option=com_bts&amp;view=notes" view="notes" img="components/com_bts/assets/images/s_notes.png" alt="Bts/Notes">COM_BTS_TITLE_NOTES</menu>    
+			<menu link="option=com_bts&amp;view=logs" view="logs" img="components/com_bts/assets/images/s_logs.png" alt="Bts/Logs">COM_BTS_TITLE_LOGS</menu>
             <menu link="option=com_bts&amp;view=imports" view="imports" img="components/com_bts/assets/images/s_imports.png" alt="Bts/Imports">COM_BTS_TITLE_IMPORTS</menu>
         </submenu>
         <files folder="administrator">
