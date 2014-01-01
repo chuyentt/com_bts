@@ -101,7 +101,9 @@ class BtsModelLogs extends JModelList {
         );
         $query->from('`#__bts_log` AS a');
 
-        
+        //
+        $query->select('uc.name AS author');
+        $query->join('LEFT', '#__users AS uc ON uc.id=a.author');
 
         
 
