@@ -812,7 +812,7 @@ jQuery( document ).ready(function( $ ) {
 
                 </div>
             </div>
-            <a href="javascript:void(0)" id="btnCollapse"></a>
+            <a href="javascript:void(0)" id="btnCollapse" class="active"></a>
         </div>
     </div>
     

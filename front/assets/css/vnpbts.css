@@ -41,7 +41,8 @@
     width:240px;
     height:500px;
     padding-right:14px;
-    background: url(../images/bg_shadow.png) 100% 0 repeat-y; 
+    background: url(../images/bg_shadow.png) 100% 0 repeat-y;
+	width: 22px;
 }
 #map_tools .inner{
     position:relative;
@@ -51,8 +52,12 @@
 #map_tools input[type="text"],
 #map_tools select,
 #map_tools textarea {
-    width:200px;
+    width:186px;
 }
+#map_tools .tool_content {
+	display:none;
+}
+
 #accordion2 .panel-title a.active {
     color:#D83500;
 }
