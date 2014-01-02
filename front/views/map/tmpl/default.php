@@ -299,9 +299,21 @@ jQuery( document ).ready(function( $ ) {
 		}
 		
 		function resetDistance() {
+			// remove marker from map 
 			for (var i=0; i<distancePoints.length; i++) {
 				distancePoints[i][0].setMap(null);
 			}
+			// remove marker from marker list
+			var removedIndexs = [];
+			for (var i=0; i<markers.length; i++) {
+				if (markers[i].bts_id == undefined) {
+					removedIndexs.push(i);
+				}
+			}
+			for (var i=removedIndexs.length-1; i>=0; i--) {
+				markers.splice(removedIndexs[i], 1);
+			}
+			
 			distanceLine.setMap(null);
 			distancePoints = [];
 			$('#txtMeasureToolResult').text('0');
