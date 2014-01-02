@@ -49,6 +49,7 @@ class BtsModelimports extends JModelLegacy {
 				$sheetView->name = $sheet->getTitle();
 				$sheetView->records = array_splice($records, 0, 11);
 				
+				// validate header name
 				foreach ($sheetView->records[0] as $header) {
 					if (trim($header) && !BtsHelper::validateWarningFields(strtolower(trim($header)), $this->_type)) {
 						$this->_error[] = 'Sheet: <strong>'.$sheetView->name.'</strong> &raquo; colum : <strong>'.$header.'</strong> is not matched';
@@ -109,7 +110,8 @@ class BtsModelimports extends JModelLegacy {
 		/*--- IMPORT STATION --*/
 		if ($this->_type == 'station') {
 			$sheet = $objPHPExcel->getSheet(0);
-			$sheetData = $sheet->toArray(null,true,true);
+			$sheetData = $sheet->toArray(null,true,true, true);
+			// var_dump($sheetData); die;
 			reset($sheetData);
 			$headers = current($sheetData);
 			$sheetData = array_slice($sheetData,1);
@@ -119,22 +121,33 @@ class BtsModelimports extends JModelLegacy {
 				$originalData[$header] = $key;
 			}
 			
+			$query = "TRUNCATE TABLE #__bts_station";
+			$db->setQuery($query);
+			$db->query();
+			
 			$rows = array();
 			foreach ($sheetData as $data) {
+			
 				$row = $originalData;
 				foreach ($row as $att => $column) {
 					$row[$att] = $data[$column];
 				}
-				unset($row['id']);
+				
+				$row['id'] = 0;
 				$row['ordering'] = 1;
 				$row['state'] = 1;
 				$row['created_by'] = $user->id;;
+				
+				$row['indoormaintenance'] = date('Y-m-d', strtotime($row['indoormaintenance']));
+				$row['outdoormaintenance'] = date('Y-m-d', strtotime($row['outdoormaintenance']));
+				$row['activitydate'] = date('Y-m-d', strtotime($row['activitydate']));
 				
 				// check existing station
 				// $query = "SELECT * FROM #__bts_station WHERE `bts_name` LIKE '".$row['bts_name']."'";
 				// $db->setQuery($query);
 				// $station = $db->loadObject();
 				// if (!$station) {
+				if (trim($row['bts_name'])) {
 					$rowStation = JTable::getInstance('station', 'BtsTable');
 					
 					if (!$rowStation->bind($row)) {
@@ -146,6 +159,8 @@ class BtsModelimports extends JModelLegacy {
 						$this->setError($rowStation->getError());
 						return false;
 					}
+					
+				}
 				// }
 			}
 		
@@ -164,7 +179,7 @@ class BtsModelimports extends JModelLegacy {
 			// if ($clearData) {
 				$query = "TRUNCATE TABLE #__bts_warning";
 				$db->setQuery($query);
-				$db->query;
+				$db->query();
 			// }
 			
 			for ($i=0; $i<$sheetCount; $i++) {
