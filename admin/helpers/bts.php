@@ -95,7 +95,7 @@ class BtsHelper
 	 */
 	public function validateWarningFields($field, $table, $getFields = false) {
 		if ($table == 'warning') {
-			$fields = array('vnp','network','bsc_name','bts_name','bts_no','device','warning_description','warning_time');
+			$fields = array('vnp','network','bsc_name','bts_name','bts_no','device','warning_description','warning_time','warning_date');
 		} elseif ($table == 'station') {
 			$fields = array('province_id','province','district','commune','address','mscmss','bsc_name','trautc','pcumfs','station_code','network','co_site','bts_name','localnumber','activitydate','activitystatus','site_id','lac','latitude','longitude','devicetype','stationtype','configuration','combine','typestation','indoormaintenance','outdoormaintenance','maintenanceby','manager','mobile','project','caremanagement','backlog','note');
 		} elseif ($table == 'note') {

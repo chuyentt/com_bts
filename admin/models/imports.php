@@ -199,6 +199,9 @@ class BtsModelimports extends JModelLegacy {
 					case 'HW_3G&SRAN3G':
 						$warningType = 2; // Orange type
 						break;
+					case 'Site-0_2G&3G&SRAN':
+						$warningType = 3; // Red type
+						break;
 					default:
 						$warningType = 0; // Green type
 					break;
@@ -219,7 +222,7 @@ class BtsModelimports extends JModelLegacy {
 					foreach ($row as $att => $column) {
 						$row[$att] = $data[$column];
 					}
-					unset($row['id']);
+					$row['id'] = 0;
 					$row['ordering'] = 1;
 					$row['state'] = 1;
 					$row['level'] = $warningType;
@@ -241,11 +244,9 @@ class BtsModelimports extends JModelLegacy {
 						
 						// handle warning date
 						// $time = date("H:i:s", strtotime($row['time']));
-						$dateParts = explode(' ',trim($row['date']));
-						$date = explode('/',trim($dateParts[0]));
-						
-						if (count($date) > 1) $row['warning_time'] = '20'.$date[2].'-'.$date[0].'-'.$date[1].' '.$dateParts[1];
-							else $row['warning_time'] = date('Y-m-d H:i:s');
+						$date = explode('-',trim($row['warning_date']));
+						if (trim($row['warning_time'])) $row['warning_time'] = '20'.$date[2].'-'.$date[0].'-'.$date[1].' '.$row['warning_time'];
+							else $row['warning_time'] = '20'.$date[2].'-'.$date[0].'-'.$date[1].' '.date('H:i:s');
 							
 						$rowWarning = JTable::getInstance('warning', 'BtsTable');
 						
