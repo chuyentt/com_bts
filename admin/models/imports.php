@@ -96,7 +96,7 @@ class BtsModelimports extends JModelLegacy {
 		$this->_type 	= $_POST['type'];
 		$inputFileType 	= 'Excel5';
 		$inputFileName	= $_POST['file'];
-		$clearData 		= 1;
+		$clearData 		= (isset($_POST['clearData'])) ? true : false;
 		
 		$user = JFactory::getUser();
 		
@@ -121,9 +121,17 @@ class BtsModelimports extends JModelLegacy {
 				$originalData[$header] = $key;
 			}
 			
-			$query = "TRUNCATE TABLE #__bts_station";
+			// clear all data
+			if ($clearData) {
+				$query = "TRUNCATE TABLE #__bts_station";
+				$db->setQuery($query);
+				$db->query();
+			}
+			
+			// get existing stations for comparing before insert
+			$query = "SELECT id, CONCAT_WS('-',LOWER(bts_name),LOWER(network)) AS alias FROM #__bts_station";
 			$db->setQuery($query);
-			$db->query();
+			$stationAlias = $db->loadAssocList('alias');
 			
 			$rows = array();
 			foreach ($sheetData as $data) {
@@ -132,22 +140,27 @@ class BtsModelimports extends JModelLegacy {
 				foreach ($row as $att => $column) {
 					$row[$att] = $data[$column];
 				}
-				
-				$row['id'] = 0;
-				$row['ordering'] = 1;
-				$row['state'] = 1;
-				$row['created_by'] = $user->id;;
-				
-				$row['indoormaintenance'] = date('Y-m-d', strtotime($row['indoormaintenance']));
-				$row['outdoormaintenance'] = date('Y-m-d', strtotime($row['outdoormaintenance']));
-				$row['activitydate'] = date('Y-m-d', strtotime($row['activitydate']));
+				if (trim($row['bts_name'])) {
+					$row['id'] = 0;
+					
+					// check duplicated station
+					$alias = strtolower(trim($row['bts_name'])).'-'.strtolower(trim($row['network']));
+					if (isset($stationAlias[$alias])) $row['id'] = $stationAlias[$alias]['id'];
+					
+					$row['ordering'] = 1;
+					$row['state'] = 1;
+					$row['created_by'] = $user->id;;
+					
+					$row['indoormaintenance'] = date('Y-m-d', strtotime($row['indoormaintenance']));
+					$row['outdoormaintenance'] = date('Y-m-d', strtotime($row['outdoormaintenance']));
+					$row['activitydate'] = date('Y-m-d', strtotime($row['activitydate']));
 				
 				// check existing station
 				// $query = "SELECT * FROM #__bts_station WHERE `bts_name` LIKE '".$row['bts_name']."'";
 				// $db->setQuery($query);
 				// $station = $db->loadObject();
 				// if (!$station) {
-				if (trim($row['bts_name'])) {
+				
 					$rowStation = JTable::getInstance('station', 'BtsTable');
 					
 					if (!$rowStation->bind($row)) {
@@ -163,7 +176,7 @@ class BtsModelimports extends JModelLegacy {
 				}
 				// }
 			}
-		
+			
 		} else if ($this->_type == 'warning') {
 		/*--- IMPORT WARNING --*/
 			
@@ -175,13 +188,23 @@ class BtsModelimports extends JModelLegacy {
             foreach ($stationsList as $s) {
                 $stations[$s->bts_alias][] = $s;
             }
+			
 			// clear all data
-			// if ($clearData) {
+			if ($clearData) {
 				$query = "TRUNCATE TABLE #__bts_warning";
 				$db->setQuery($query);
 				$db->query();
-			// }
+			}
 			
+			// get existing stations for comparing before insert
+			$query = "SELECT warning.id, CONCAT_WS('-',LOWER(station.bts_name),LOWER(station.network),LOWER(REPLACE(warning.warning_description,' ','')),DATE_FORMAT(warning.warning_time,'%Y%m%d%H%i%s')) AS alias ".
+					" FROM #__bts_warning AS warning ".
+					" LEFT JOIN #__bts_station AS station ON station.id = warning.station_id ".
+					" WHERE warning.state = 1 AND warning.maintenance_state = 0 AND warning.approve_state = 0"
+					;
+			$db->setQuery($query);
+			$warningAlias = $db->loadAssocList('alias');
+			print_r($warningAlias); 
 			for ($i=0; $i<$sheetCount; $i++) {
 				$sheet = $objPHPExcel->getSheet($i);
 				
@@ -196,7 +219,6 @@ class BtsModelimports extends JModelLegacy {
 					case 'HW_2G&SRAN2G':
 					case 'HW_3G&SRAN3G':
 					case 'GCLK_2G':
-					case 'HW_3G&SRAN3G':
 						$warningType = 2; // Orange type
 						break;
 					case 'Site-0_2G&3G&SRAN':
@@ -216,13 +238,19 @@ class BtsModelimports extends JModelLegacy {
 				foreach ($headers as $key => $header) {
 					$originalData[strtolower(trim($header))] = $key;
 				}
-                
+				
 				foreach ($sheetData as $data) {
 					$row = $originalData;
 					foreach ($row as $att => $column) {
 						$row[$att] = $data[$column];
 					}
 					$row['id'] = 0;
+					var_dump($row);
+					// check duplicated station
+					$date = explode('-',trim($row['warning_date']));
+					$time = '20'.$date[2].$date[0].$date[1].trim(str_replace(':','',$row['warning_time']));
+					$alias = strtolower($row['bts_name']).'-'.strtolower($row['network']).'-'.strtolower(str_replace(' ','',$row['warning_description'])).'-'.$time;
+					echo $alias.'<br>';die;
 					$row['ordering'] = 1;
 					$row['state'] = 1;
 					$row['level'] = $warningType;
@@ -238,7 +266,7 @@ class BtsModelimports extends JModelLegacy {
 							}
 						}
 					}
-                    
+					
 					// if (isset($stations[strtolower(trim($row['bts_name']))])) {
 					if ($row['station_id']) {
 						
@@ -262,7 +290,9 @@ class BtsModelimports extends JModelLegacy {
 					}
 				}
 			}
+			die;
 		}
+		
 		return true;
 	}
 

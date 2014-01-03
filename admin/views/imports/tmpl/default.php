@@ -92,10 +92,18 @@ if (count($this->sheets) && count($this->file)) $task = 'imports.import';
 					
 					<?php if ($this->type == 'station' && !count($this->error)) { ?>
 						<input class="btn btn-primary pull-right" id="btn-import-station" type="submit" value="<?php echo JText::_('COM_BTS_FORM_BTN_IMPORT'); ?>" />
+						<div class="pull-right">
+							<input type="checkbox" name="clearData" id="clearData" />
+							<label for="clearData"><?php echo JText::_('COM_BTS_FORM_IMPORT_REPLACE'); ?></label>
+						</div>
 					<?php } ?>
 					
 					<?php if ($this->type == 'warning' && !count($this->error)) { ?>
 						<input class="btn btn-primary pull-right" id="btn-import-warning" type="submit" value="<?php echo JText::_('COM_BTS_FORM_BTN_IMPORT'); ?>" />
+						<div class="pull-right">
+							<input type="checkbox" name="clearData" id="clearData" />
+							<label for="clearData"><?php echo JText::_('COM_BTS_FORM_IMPORT_REPLACE'); ?></label>
+						</div>
 					<?php } ?>
 				</p>
 				
