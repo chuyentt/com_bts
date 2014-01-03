@@ -32,10 +32,6 @@
         <folder>controllers</folder>
         <folder>helpers</folder>
     </files>
-    <languages folder="site">
-        <language tag="en-GB">language/en-GB.com_bts.ini</language>
-        <language tag="vi-VN">language/vi-VN.com_bts.ini</language>
-    </languages>
     <administration>
         <menu img="components/com_bts/assets/images/s_com_bts.png" >COM_BTS</menu>
         <submenu>
@@ -44,6 +40,7 @@
             <menu link="option=com_bts&amp;view=notes" view="notes" img="components/com_bts/assets/images/s_notes.png" alt="Bts/Notes">COM_BTS_TITLE_NOTES</menu>    
 			<menu link="option=com_bts&amp;view=logs" view="logs" img="components/com_bts/assets/images/s_logs.png" alt="Bts/Logs">COM_BTS_TITLE_LOGS</menu>
             <menu link="option=com_bts&amp;view=imports" view="imports" img="components/com_bts/assets/images/s_imports.png" alt="Bts/Imports">COM_BTS_TITLE_IMPORTS</menu>
+            <menu link="option=com_bts&amp;view=configs" view="configs" img="components/com_bts/assets/images/s_configs.png" alt="Bts/Configs">COM_BTS_TITLE_CONFIGS</menu>
         </submenu>
         <files folder="administrator">
             <filename>access.xml</filename>
