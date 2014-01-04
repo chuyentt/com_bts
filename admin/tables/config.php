@@ -37,7 +37,7 @@ class BtsTableconfig extends JTable {
         
 		$input = JFactory::getApplication()->input;
 		$task = $input->getString('task', '');
-		if(($task == 'save' || $task == 'apply') && (!JFactory::getUser()->authorise('core.edit.state','com_bts.config.'.$array['id']) && $array['state'] == 1)){
+		if(($task == 'save' || $task == 'apply') && (!JFactory::getUser()->authorise('core.edit.state','com_bts') && $array['state'] == 1)){
 			$array['state'] = 0;
 		}
 

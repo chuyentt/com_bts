@@ -58,12 +58,13 @@ class BtsViewConfig extends JViewLegacy
 		JToolBarHelper::title(JText::_('COM_BTS_TITLE_CONFIG'), 'config.png');
 
 		// If not checked out, can save the item.
-		if (!$checkedOut && ($canDo->get('core.edit')||($canDo->get('core.create'))))
+		if (!$checkedOut && ($canDo->get('core.admin')))
 		{
 
 			JToolBarHelper::apply('config.apply', 'JTOOLBAR_APPLY');
 			JToolBarHelper::save('config.save', 'JTOOLBAR_SAVE');
 		}
+/*
 		if (!$checkedOut && ($canDo->get('core.create'))){
 			JToolBarHelper::custom('config.save2new', 'save-new.png', 'save-new_f2.png', 'JTOOLBAR_SAVE_AND_NEW', false);
 		}
@@ -71,6 +72,7 @@ class BtsViewConfig extends JViewLegacy
 		if (!$isNew && $canDo->get('core.create')) {
 			JToolBarHelper::custom('config.save2copy', 'save-copy.png', 'save-copy_f2.png', 'JTOOLBAR_SAVE_AS_COPY', false);
 		}
+*/
 		if (empty($this->item->id)) {
 			JToolBarHelper::cancel('config.cancel', 'JTOOLBAR_CANCEL');
 		}

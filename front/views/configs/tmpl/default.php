@@ -24,7 +24,7 @@ defined('_JEXEC') or die;
 
             
 				<?php
-					if($item->state == 1 || ($item->state == 0 && JFactory::getUser()->authorise('core.edit.own',' com_bts.config.'.$item->id))):
+					if($item->state == 1 || ($item->state == 0 && JFactory::getUser()->authorise('core.edit.own',' com_bts'))):
 						$show = true;
 						?>
 							<li>

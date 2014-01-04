@@ -61,9 +61,9 @@ class BtsViewConfigs extends JViewLegacy
         $formPath = JPATH_COMPONENT_ADMINISTRATOR.'/views/config';
         if (file_exists($formPath)) {
 
-            if ($canDo->get('core.create')) {
-			    JToolBarHelper::addNew('config.add','JTOOLBAR_NEW');
-		    }
+            //if ($canDo->get('core.create')) {
+			//    JToolBarHelper::addNew('config.add','JTOOLBAR_NEW');
+		    //}
 
 		    if ($canDo->get('core.edit') && isset($this->items[0])) {
 			    JToolBarHelper::editList('config.edit','JTOOLBAR_EDIT');
@@ -71,7 +71,7 @@ class BtsViewConfigs extends JViewLegacy
 
         }
 
-		if ($canDo->get('core.edit.state')) {
+		if ($canDo->get('core.admin')) {
 
             if (isset($this->items[0]->state)) {
 			    JToolBarHelper::divider();
@@ -81,7 +81,7 @@ class BtsViewConfigs extends JViewLegacy
                 //If this component does not use state then show a direct delete button as we can not trash
                 JToolBarHelper::deleteList('', 'configs.delete','JTOOLBAR_DELETE');
             }
-
+/*
             if (isset($this->items[0]->state)) {
 			    JToolBarHelper::divider();
 			    JToolBarHelper::archiveList('configs.archive','JTOOLBAR_ARCHIVE');
@@ -89,8 +89,9 @@ class BtsViewConfigs extends JViewLegacy
             if (isset($this->items[0]->checked_out)) {
             	JToolBarHelper::custom('configs.checkin', 'checkin.png', 'checkin_f2.png', 'JTOOLBAR_CHECKIN', true);
             }
+*/
 		}
-        
+/*        
         //Show trash and delete for components that uses the state field
         if (isset($this->items[0]->state)) {
 		    if ($state->get('filter.state') == -2 && $canDo->get('core.delete')) {
@@ -101,7 +102,7 @@ class BtsViewConfigs extends JViewLegacy
 			    JToolBarHelper::divider();
 		    }
         }
-
+*/
 		if ($canDo->get('core.admin')) {
 			JToolBarHelper::preferences('com_bts');
 		}

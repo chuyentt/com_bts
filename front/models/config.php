@@ -211,14 +211,14 @@ class BtsModelConfig extends JModelForm
 
         if($id) {
             //Check the user can edit this item
-            $authorised = $user->authorise('core.edit', 'com_bts.config.'.$id) || $authorised = $user->authorise('core.edit.own', 'com_bts.config.'.$id);
-            if($user->authorise('core.edit.state', 'com_bts.config.'.$id) !== true && $state == 1){ //The user cannot edit the state of the item.
+            $authorised = $user->authorise('core.edit', 'com_bts') || $authorised = $user->authorise('core.edit.own', 'com_bts');
+            if($user->authorise('core.edit.state', 'com_bts') !== true && $state == 1){ //The user cannot edit the state of the item.
                 $data['state'] = 0;
             }
         } else {
             //Check the user can create new items in this section
             $authorised = $user->authorise('core.create', 'com_bts');
-            if($user->authorise('core.edit.state', 'com_bts.config.'.$id) !== true && $state == 1){ //The user cannot edit the state of the item.
+            if($user->authorise('core.edit.state', 'com_bts') !== true && $state == 1){ //The user cannot edit the state of the item.
                 $data['state'] = 0;
             }
         }
@@ -240,7 +240,7 @@ class BtsModelConfig extends JModelForm
      function delete($data)
     {
         $id = (!empty($data['id'])) ? $data['id'] : (int)$this->getState('config.id');
-        if(JFactory::getUser()->authorise('core.delete', 'com_bts.config.'.$id) !== true){
+        if(JFactory::getUser()->authorise('core.delete', 'com_bts') !== true){
             JError::raiseError(403, JText::_('JERROR_ALERTNOAUTHOR'));
             return false;
         }
