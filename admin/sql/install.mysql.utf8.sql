@@ -85,6 +85,7 @@ PRIMARY KEY (`id`)
 CREATE TABLE IF NOT EXISTS `#__bts_log` (
 `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
 
+`state` TINYINT(1)  NOT NULL ,
 `created_time` DATETIME NOT NULL ,
 `author` VARCHAR(255)  NOT NULL ,
 `activity` MEDIUMTEXT NOT NULL ,

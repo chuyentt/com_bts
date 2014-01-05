@@ -187,7 +187,15 @@ if (!empty($this->extra_sidebar)) {
 					<?php echo $item->created_time; ?>
 				</td>
 				<td>
+				<?php if (isset($item->checked_out) && $item->checked_out) : ?>
+					<?php echo JHtml::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'logs.', $canCheckin); ?>
+				<?php endif; ?>
+				<?php if ($canEdit) : ?>
+					<a href="<?php echo JRoute::_('index.php?option=com_bts&task=log.edit&id='.(int) $item->id); ?>">
+					<?php echo $this->escape($item->author); ?></a>
+				<?php else : ?>
 					<?php echo $this->escape($item->author); ?>
+				<?php endif; ?>
 				</td>
 				<td>
 

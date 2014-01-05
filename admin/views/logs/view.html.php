@@ -56,7 +56,7 @@ class BtsViewLogs extends JViewLegacy
 		$canDo	= BtsHelper::getActions($state->get('filter.category_id'));
 
 		JToolBarHelper::title(JText::_('COM_BTS_TITLE_LOGS'), 'logs.png');
-
+/*
         //Check if the form exists before showing the add/edit buttons
         $formPath = JPATH_COMPONENT_ADMINISTRATOR.'/views/log';
         if (file_exists($formPath)) {
@@ -90,7 +90,7 @@ class BtsViewLogs extends JViewLegacy
             	JToolBarHelper::custom('logs.checkin', 'checkin.png', 'checkin_f2.png', 'JTOOLBAR_CHECKIN', true);
             }
 		}
-        
+ */       
         //Show trash and delete for components that uses the state field
         if (isset($this->items[0]->state)) {
 		    if ($state->get('filter.state') == -2 && $canDo->get('core.delete')) {
@@ -111,6 +111,16 @@ class BtsViewLogs extends JViewLegacy
         
         $this->extra_sidebar = '';
         
+		JHtmlSidebar::addFilter(
+
+			JText::_('JOPTION_SELECT_PUBLISHED'),
+
+			'filter_published',
+
+			JHtml::_('select.options', JHtml::_('jgrid.publishedOptions'), "value", "text", $this->state->get('filter.state'), true)
+
+		);
+
         
 	}
     

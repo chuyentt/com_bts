@@ -27,6 +27,7 @@ class BtsModelLogs extends JModelList {
         if (empty($config['filter_fields'])) {
             $config['filter_fields'] = array(
                                 'id', 'a.id',
+                'state', 'a.state',
                 'created_time', 'a.created_time',
                 'author', 'a.author',
                 'activity', 'a.activity',
@@ -106,6 +107,14 @@ class BtsModelLogs extends JModelList {
         $query->join('LEFT', '#__users AS uc ON uc.id=a.author');
 
         
+    // Filter by published state
+    $published = $this->getState('filter.state');
+    if (is_numeric($published)) {
+        $query->where('a.state = '.(int) $published);
+    } else if ($published === '') {
+        $query->where('(a.state IN (0, 1))');
+    }
+    
 
         // Filter by search in title
         $search = $this->getState('filter.search');
