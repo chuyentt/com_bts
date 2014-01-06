@@ -120,9 +120,6 @@ if (!empty($this->extra_sidebar)) {
 				<th class='left'>
 				<?php echo JHtml::_('grid.sort',  'COM_BTS_WARNINGS_WARNING_DESCRIPTION', 'a.warning_description', $listDirn, $listOrder); ?>
 				</th>
-				<th class='left' >
-				<?php echo JHtml::_('grid.sort',  'COM_BTS_WARNINGS_DEVICE', 'a.device', $listDirn, $listOrder); ?>
-				</th>
 				<th class='left'>
 				<?php echo JHtml::_('grid.sort',  'COM_BTS_WARNINGS_LEVEL', 'a.level', $listDirn, $listOrder); ?>
 				</th>
@@ -232,10 +229,6 @@ if (!empty($this->extra_sidebar)) {
 				<?php else : ?>
 					<?php echo $this->escape($item->warning_description); ?>
 				<?php endif; ?>
-				</td>
-				<td>
-
-					<?php echo $item->device; ?>
 				</td>
 				<td>
 
