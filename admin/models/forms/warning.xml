@@ -36,7 +36,7 @@
             readonly="true"
             filter="string" /> 
 
-       <field name="device" type="text"
+       <field name="device" type="textarea" rows="5"
                 
             label="COM_BTS_FORM_LBL_WARNING_DEVICE"
             description="COM_BTS_FORM_DESC_WARNING_DEVICE" 
