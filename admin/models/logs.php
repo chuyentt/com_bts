@@ -61,7 +61,7 @@ class BtsModelLogs extends JModelList {
         $this->setState('params', $params);
 
         // List state information.
-        parent::populateState('a.author', 'asc');
+        parent::populateState('a.id', 'desc');
     }
 
     /**

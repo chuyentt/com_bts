@@ -88,7 +88,7 @@ class BtsModelWarnings extends JModelList {
         $this->setState('params', $params);
 
         // List state information.
-        parent::populateState('a.station_id', 'asc');
+        parent::populateState('a.maintenance_time', 'desc');
     }
 
     /**
