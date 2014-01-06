@@ -56,9 +56,18 @@ class BtsTablenote extends JTable {
 			$log = new stdClass();
 			$log->created_time = date("Y-m-d H:i:s");
 			$log->author = JFactory::getUser()->id;
-			$log->activity='deleted note: ' . $activity;
+			$log->activity='Xóa nhật ký: ' . $activity;
 			$result = JFactory::getDbo()->insertObject('#__bts_log', $log);
 		}
+		if(($task == 'save' || $task == 'apply') && (JFactory::getUser()->authorise('core.edit.state','com_bts') && $array['id'] == 0)){
+			$activity = "S.ID: " . $array['station_id'] . "; Nội dung: " . $array['note'];
+			$log = new stdClass();
+			$log->created_time = date("Y-m-d H:i:s");
+			$log->author = JFactory::getUser()->id;
+			$log->activity='Thêm nhật ký: ' . $activity;
+			$result = JFactory::getDbo()->insertObject('#__bts_log', $log);
+		}
+
 		//Support for multiple or not foreign key field: station_id
 			if(isset($array['station_id'])){
 				if(is_array($array['station_id'])){
