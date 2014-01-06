@@ -197,7 +197,8 @@ class BtsModelimports extends JModelLegacy {
 			}
 			
 			// get existing stations for comparing before insert
-			$query = "SELECT warning.id, CONCAT_WS('-',LOWER(station.bts_name),LOWER(station.network),LOWER(REPLACE(warning.warning_description,' ','')),DATE_FORMAT(warning.warning_time,'%Y%m%d%H%i%s')) AS alias ".
+			// $query = "SELECT warning.id, CONCAT_WS('-',LOWER(station.bts_name),LOWER(station.network),LOWER(REPLACE(warning.warning_description,' ','')),DATE_FORMAT(warning.warning_time,'%Y%m%d%H%i%s')) AS alias ".
+			$query = "SELECT warning.id, CONCAT_WS('-',LOWER(station.bts_name),LOWER(station.network),DATE_FORMAT(warning.warning_time,'%Y%m%d%H%i%s')) AS alias ".
 					" FROM #__bts_warning AS warning ".
 					" LEFT JOIN #__bts_station AS station ON station.id = warning.station_id ".
 					" WHERE warning.state = 1 AND warning.maintenance_state = 0 AND warning.approve_state = 0"
@@ -245,47 +246,57 @@ class BtsModelimports extends JModelLegacy {
 						$row[$att] = $data[$column];
 					}
 					$row['id'] = 0;
-					var_dump($row);
+					// var_dump($row);
 					// check duplicated station
 					$date = explode('-',trim($row['warning_date']));
-					$time = '20'.$date[2].$date[0].$date[1].trim(str_replace(':','',$row['warning_time']));
-					$alias = strtolower($row['bts_name']).'-'.strtolower($row['network']).'-'.strtolower(str_replace(' ','',$row['warning_description'])).'-'.$time;
-					echo $alias.'<br>';die;
-					$row['ordering'] = 1;
-					$row['state'] = 1;
-					$row['level'] = $warningType;
-					$row['created_by'] = $user->id;
+					$insert = true;
+					if (count($date)==3) {
+						$time = '20'.$date[2].$date[0].$date[1].trim(str_replace(':','',$row['warning_time']));
+						$alias = strtolower($row['bts_name']).'-'.strtolower($row['network']).'-'.$time;
+						echo $alias.'<br>';
+						if (isset($warningAlias[$alias])) {
+							$insert = false;
+						}
+						
+					} else $insert = false;
 					
-					// get station ID in station table
-					$row['station_id'] = 0;
-					if (isset($stations[strtolower($row['bts_name'])])) {
-						foreach ($stations[strtolower($row['bts_name'])] as $station) {
-							if ($station->network == $row['network']) {
-								$row['station_id'] = $station->id;
-								break;
+					if ($insert) {
+						$row['ordering'] = 1;
+						$row['state'] = 1;
+						$row['level'] = $warningType;
+						$row['created_by'] = $user->id;
+						
+						// get station ID in station table
+						$row['station_id'] = 0;
+						if (isset($stations[strtolower($row['bts_name'])])) {
+							foreach ($stations[strtolower($row['bts_name'])] as $station) {
+								if ($station->network == $row['network']) {
+									$row['station_id'] = $station->id;
+									break;
+								}
 							}
 						}
-					}
-					
-					// if (isset($stations[strtolower(trim($row['bts_name']))])) {
-					if ($row['station_id']) {
 						
-						// handle warning date
-						// $time = date("H:i:s", strtotime($row['time']));
-						$date = explode('-',trim($row['warning_date']));
-						if (trim($row['warning_time'])) $row['warning_time'] = '20'.$date[2].'-'.$date[0].'-'.$date[1].' '.$row['warning_time'];
-							else $row['warning_time'] = '20'.$date[2].'-'.$date[0].'-'.$date[1].' '.date('H:i:s');
+						// if (isset($stations[strtolower(trim($row['bts_name']))])) {
+						if ($row['station_id']) {
 							
-						$rowWarning = JTable::getInstance('warning', 'BtsTable');
-						
-						if (!$rowWarning->bind($row)) {
-							$this->setError($rowWarning->getError());
-							return false;
-						}
-						
-						if (!$rowWarning->store()) {
-							$this->setError($rowWarning->getError());
-							return false;
+							// handle warning date
+							// $time = date("H:i:s", strtotime($row['time']));
+							$date = explode('-',trim($row['warning_date']));
+							if (trim($row['warning_time'])) $row['warning_time'] = '20'.$date[2].'-'.$date[0].'-'.$date[1].' '.$row['warning_time'];
+								else $row['warning_time'] = '20'.$date[2].'-'.$date[0].'-'.$date[1].' '.date('H:i:s');
+								
+							$rowWarning = JTable::getInstance('warning', 'BtsTable');
+							
+							if (!$rowWarning->bind($row)) {
+								$this->setError($rowWarning->getError());
+								return false;
+							}
+							
+							if (!$rowWarning->store()) {
+								$this->setError($rowWarning->getError());
+								return false;
+							}
 						}
 					}
 				}
