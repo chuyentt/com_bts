@@ -198,14 +198,14 @@ class BtsModelimports extends JModelLegacy {
 			
 			// get existing stations for comparing before insert
 			// $query = "SELECT warning.id, CONCAT_WS('-',LOWER(station.bts_name),LOWER(station.network),LOWER(REPLACE(warning.warning_description,' ','')),DATE_FORMAT(warning.warning_time,'%Y%m%d%H%i%s')) AS alias ".
-			$query = "SELECT warning.id, CONCAT_WS('-',LOWER(station.bts_name),LOWER(station.network),DATE_FORMAT(warning.warning_time,'%Y%m%d%H%i%s')) AS alias ".
+			$query = "SELECT warning.id, CONCAT_WS('-',LOWER(station.bts_name),LOWER(station.network),DATE_FORMAT(warning.warning_time,'%Y%m%d%k%i%s')) AS alias ".
 					" FROM #__bts_warning AS warning ".
 					" LEFT JOIN #__bts_station AS station ON station.id = warning.station_id ".
 					" WHERE warning.state = 1 AND warning.maintenance_state = 0 AND warning.approve_state = 0"
 					;
 			$db->setQuery($query);
 			$warningAlias = $db->loadAssocList('alias');
-			print_r($warningAlias); 
+			// print_r($warningAlias); 
 			for ($i=0; $i<$sheetCount; $i++) {
 				$sheet = $objPHPExcel->getSheet($i);
 				
@@ -253,7 +253,7 @@ class BtsModelimports extends JModelLegacy {
 					if (count($date)==3) {
 						$time = '20'.$date[2].$date[0].$date[1].trim(str_replace(':','',$row['warning_time']));
 						$alias = strtolower($row['bts_name']).'-'.strtolower($row['network']).'-'.$time;
-						echo $alias.'<br>';
+						// echo $alias.'<br>';
 						if (isset($warningAlias[$alias])) {
 							$insert = false;
 						}
@@ -301,7 +301,7 @@ class BtsModelimports extends JModelLegacy {
 					}
 				}
 			}
-			die;
+			// die;
 		}
 		
 		return true;

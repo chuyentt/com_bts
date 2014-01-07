@@ -43,7 +43,7 @@ class BtsModelExports extends JModelLegacy {
 			$db = JFactory::getDbo();
 			
 			$objPHPExcel = new PHPExcel();
-			$excelColumns = array('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','AA','AB','AC','AD','AE','AF','AG','AH','AI','AJ','AK','AL','AM','AN','AO','AP','AQ','AR','AS','AT','AU','AV','AW','AX','AY','AZ');
+			$excelColumns = array('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','AA','AB','AC','AD','AE','AF','AG','AH','AI','AJ','AK','AL','AM','AN','AO','AP','AQ','AR','AS','AT','AU','AV','AW','AX','AY','AZ','BA');
 
 			// Set document properties
 			$objPHPExcel->getProperties()->setCreator("Geomatics")
@@ -80,7 +80,7 @@ class BtsModelExports extends JModelLegacy {
 				// get data for warning
 				$query = "SELECT a.*, station.bts_name, station.network, station.bsc_name, ".
 						" maintenance_by.name AS maintenance_by, approve_by.name AS approve_by,  ".
-						" DATE_FORMAT(a.warning_time, '%d-%m-%Y %H:%i:%s') AS warning_time, DATE_FORMAT(a.maintenance_time, '%d-%m-%Y %H:%i:%s') AS maintenance_time, DATE_FORMAT(a.approve_time, '%d-%m-%Y %H:%i:%s') AS approve_time ".
+						" DATE_FORMAT(a.warning_time, '%k:%i:%s') AS warning_time, DATE_FORMAT(a.warning_time, '%d-%m-%Y') AS warning_date, DATE_FORMAT(a.maintenance_time, '%d-%m-%Y %H:%i:%s') AS maintenance_time, DATE_FORMAT(a.approve_time, '%d-%m-%Y %H:%i:%s') AS approve_time ".
 						" FROM #__bts_warning AS a ".
 						" LEFT JOIN #__bts_station AS station ON station.id = a.station_id".
 						" LEFT JOIN #__users AS maintenance_by ON maintenance_by.id = a.maintenance_by".
