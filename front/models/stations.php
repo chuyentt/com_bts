@@ -73,12 +73,12 @@ class BtsModelStations extends JModelList {
                 )
         );
         $query->from('`#__bts_station` AS a');
-        /*
+        
         $province_id = JFactory::getApplication()->input->get('province_id');
-        if ($province_id!="*" || $province_id!="0") {
+        if ($province_id) {
                 $query->where("a.province_id = '".$province_id."'");
         }
-        */
+        
         $query->leftJoin('(SELECT station_id, MAX(level) warning_level FROM `#__bts_warning` WHERE approve_state=0 GROUP BY station_id) wm ON a.id = wm.station_id');
         
 
