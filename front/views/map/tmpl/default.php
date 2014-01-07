@@ -33,9 +33,9 @@ $iconWarningStates = array(
 <link rel="stylesheet" href="<?php echo $assetUrl.'css/vnpbts.css'; ?>" />
 <link rel="stylesheet" href="<?php echo $assetUrl.'ui-lightness/jquery-ui-1.10.3.custom.min.css'; ?>" />
 <!--
-<script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyA4znz5H6T2NKskWfIW6e0ve_g38Gg_NiM&sensor=true&language=vi"></script>
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyA4znz5H6T2NKskWfIW6e0ve_g38Gg_NiM&sensor=false&language=vi"></script>
 -->
-<script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyBlW40FBESAIH0sOGTFZSnB2xsXuBUxGPA&sensor=true&language=vi&libraries=geometry"></script>
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyBlW40FBESAIH0sOGTFZSnB2xsXuBUxGPA&sensor=false&language=vi&libraries=geometry"></script>
 <!--
 <script type="text/javascript" src="<?php echo $assetUrl.'js/jquery-1.9.1.js'; ?> "></script>
 -->
