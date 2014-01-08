@@ -62,7 +62,7 @@ class BtsModelMap extends JModelList {
         $query = $db->getQuery(true);
 
         // Select the required fields from the table.
-        $query->select('DISTINCT a.id, a.address, a.bts_name, LOWER(a.bts_name) AS bts_alias,  a.network, a.latitude, a.longitude, a.duplicate');
+        $query->select('a.id, a.address, a.bts_name, LOWER(a.bts_name) AS bts_alias,  a.network, a.latitude, a.longitude, a.duplicate, a.province_id, a.bsc_name');
         
         $query->from('`#__bts_station` AS a');
 		$query->where('a.state = 1');
@@ -75,8 +75,8 @@ class BtsModelMap extends JModelList {
 		$query->select('warning.level');
 		$query->join('LEFT', '#__bts_warning AS warning ON warning.station_id = a.id');
 		
-		$query->where('warning.state = 1');
-		$query->where('warning.approve_state = 0');
+		// $query->where('warning.state = 1');
+		// $query->where('warning.approve_state = 0');
         
 		// remove by executing slowly
         // $query->where(
@@ -103,11 +103,12 @@ class BtsModelMap extends JModelList {
 				
 			// }
 		// }
-		
+		// echo $query;
         return $query;
     }
 
     public function getItems() {
+	
         $items = parent::getItems();
 		
 		// find max warning level and remove duplicated stations

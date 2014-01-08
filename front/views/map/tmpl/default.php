@@ -87,12 +87,19 @@ jQuery( document ).ready(function( $ ) {
 	$.each( data, function(i, markerData) {
 		addressData.push({label: markerData.bts_name+' '+markerData.address, value: markerData.bts_name});
 	});
+	var bdcData = [];
+	$.each( data, function(i, markerData) {
+		bdcData.push(markerData.bsc_name);
+	});
+	var bscData = [];
+	$.each(bdcData, function(i, el){
+		if($.inArray(el, bscData) === -1) bscData.push(el);
+	});
 	
 //	$('#map_canvas').gmap({'disableDefaultUI':true, 'center':center, 'callback': function() {
 	$('#map_canvas').gmap({'center':center, 'draggable': true, 'zoomControl':false, 'panControl':false, 'scaleControl':true, 'streetViewControl':false, 'callback': function() {
 		var self = this;
         var map = self.get('map');
-		console.log(map); 
 		// add marker
 		$.each( data, function(i, markerData) {
 		
@@ -106,16 +113,15 @@ jQuery( document ).ready(function( $ ) {
 					'position':latLng,
 					'icon':markerData.icon_url,
 					'icon_size': { x: 20, y: 34 },
-					'activitystatus':markerData.activitystatus,
 					'network':markerData.network,
-					'co_site':markerData.co_site,
 					'level':markerData.level,
 					'duplicate':markerData.duplicate,
+					'province_id':markerData.province_id,
+					'bsc_name':markerData.bsc_name,
 					'bounds':true
 					}, function(map, marker) {})
 				.click(function() {
 					var marker = $(this)[0];
-					console.log(marker);
 					$('#dialog').dialog({
 						modal:true, 
                         minWidth: 780,
@@ -151,7 +157,13 @@ jQuery( document ).ready(function( $ ) {
 		});
 		self.set('MarkerClusterer', cluster);
 		
-		// console.log(addressData); 
+		// set options for province combobox
+		$.getJSON('<?php echo JURI::root(); ?>components/com_bts/helpers/province.json', function(data) {
+			$.each(data, function( index, value ) {
+				$('#map_filter_province').append($('<option/>',{value: index, text: value}));
+			});
+		});
+		
 		$('#map_search_input').autocomplete({
 			minLength: 2,
 			source: addressData,
@@ -173,6 +185,12 @@ jQuery( document ).ready(function( $ ) {
 					content:  _marker.bts_address
 				}, _marker);
 			}
+		});
+		
+		// autocomplete for bsc_name in filter
+		$('#map_filter_bsc').autocomplete({
+			minLength: 2,
+			source: bscData
 		});
 		
 		var point1 = '';
@@ -217,6 +235,7 @@ jQuery( document ).ready(function( $ ) {
 			}
 		});
 		var markers = self.get('markers');
+		
 		// filter
 		$('#btn_filter').on('click', function() { 
 			filter(false);
@@ -269,15 +288,15 @@ jQuery( document ).ready(function( $ ) {
 			
 			if (reset) {
 				$('#map_filter_type').val('');
-				$('#map_filter_status').val('');
+				$('#map_filter_province').val('');
 				$('#map_filter_stype').val('');
-				$('#map_filter_site').val('');
+				$('#map_filter_bsc').val('');
 			}
 			
 			var warningType	= $('#map_filter_type').val();
-			var status 		= $('#map_filter_status').val();
 			var stationType = $('#map_filter_stype').val();
-			var coSite 		= $('#map_filter_site').val();
+			var province 	= $('#map_filter_province').val();
+			var bsc 		= $('#map_filter_bsc').val();
 			
 			var visibleMarkers = [];
 			cluster.clearMarkers();
@@ -286,9 +305,9 @@ jQuery( document ).ready(function( $ ) {
 				// cluster.removeMarker(marker);
 				if (
 					(warningType == '' || (warningType != '' && marker.level == warningType)) &&
-					(status == '' || (status != '' && marker.activitystatus == status)) &&
-					(stationType == '' || (stationType != '' && marker.network == stationType)) &&
-					(coSite == '' || (coSite != '' && marker.co_site == coSite))
+					(province == '' || (province != '' && marker.province_id == province)) &&
+					(bsc == '' || (bsc != '' && marker.bsc_name == bsc)) &&
+					(stationType == '' || (stationType != '' && marker.network == stationType))
 				) {
 					// marker.setVisible(true);
 					// cluster.addMarker(marker);
@@ -314,7 +333,7 @@ jQuery( document ).ready(function( $ ) {
 				markers.splice(removedIndexs[i], 1);
 			}
 			
-			distanceLine.setMap(null);
+			if (distanceLine) distanceLine.setMap(null);
 			distancePoints = [];
 			$('#txtMeasureToolResult').text('0');
 		}
@@ -480,7 +499,6 @@ jQuery( document ).ready(function( $ ) {
 					url: '<?php echo JURI::root(); ?>index.php?option=com_bts&view=notes&format=json&station_id='+marker.bts_id,
 					success: function(data) {
 						$('#notesHistoryLoading').hide();
-						console.log(data); 
 						$.each(data, function(index, item) {
 							var tdNote = $('<td/>', {text: item.note});
 							var tdCreatedBy = $('<td/>', {text: item.created_by});
@@ -582,7 +600,6 @@ jQuery( document ).ready(function( $ ) {
 					url: '<?php echo JURI::root(); ?>index.php?option=com_bts&view=warnings&format=json&station_id='+marker.bts_id,
 					success: function(data) {
 						$('#warningHistoryLoading').hide();
-						console.log(data); 
 						$.each(data, function(index, item) {
 							var tdID = $('<td/>', {text: item.id});
 							var tdLevel = $('<td/>', {html: '<span class="warning'+item.level+'">'+warningLevelText[item.level]+'</span>'});
@@ -740,6 +757,10 @@ jQuery( document ).ready(function( $ ) {
 									<div class="row-fluid">
 										<label class="checkbox"><input type="checkbox" id="chkMarkerLabel" checked value="1" /> <?php echo JText::_('COM_BTS_TITLE_STATION_SHOW_MARKER_LABEL'); ?></label>
 									</div>
+									<div class="row-fluid">
+                                        <?php echo JText::_('COM_BTS_TITLE_MAP_FILTER_BSC'); ?> <br/>
+										<input type="text" name="map_filter_bsc" id="map_filter_bsc" />
+                                    </div>
                                     <div class="row-fluid">
                                         <?php echo JText::_('COM_BTS_TITLE_MAP_FILTER_WARNING_LEVEL'); ?><br/>
                                         <select name="type" id="map_filter_type">
@@ -751,15 +772,6 @@ jQuery( document ).ready(function( $ ) {
                                         </select>
                                     </div>
                                     <div class="row-fluid">
-                                        <?php echo JText::_('COM_BTS_TITLE_MAP_FILTER_WARNING_ACTIVITY_STATUS'); ?><br/>
-                                        <select name="status" id="map_filter_status">
-                                            <option value="" selected="selected"><?php echo JText::_('COM_BTS_TITLE_MAP_FILTER_WARNING_ALL'); ?></option>
-                                            <option value="OnAir">On Air</option>
-                                            <option value="NotOnAir">Not On Air</option>
-                                        </select>
-                                    </div>
-                                    
-                                    <div class="row-fluid">
                                         <?php echo JText::_('COM_BTS_TITLE_MAP_FILTER_NETWORK'); ?> <br/>
                                         <select name="stype" id="map_filter_stype">
                                             <option value="" selected="selected"><?php echo JText::_('COM_BTS_TITLE_MAP_FILTER_WARNING_ALL'); ?></option>
@@ -768,12 +780,10 @@ jQuery( document ).ready(function( $ ) {
                                             <option value="2G-3G">2G-3G</option>
                                         </select>
                                     </div>
-                                    <div class="row-fluid">
-                                        <?php echo JText::_('COM_BTS_TITLE_MAP_FILTER_CO_SITE'); ?> <br/>
-                                        <select name="site" id="map_filter_site">
+									<div class="row-fluid">
+                                        <?php echo JText::_('COM_BTS_TITLE_MAP_FILTER_PROVINCE'); ?> <br/>
+                                        <select name="province" id="map_filter_province">
                                             <option value="" selected="selected"><?php echo JText::_('COM_BTS_TITLE_MAP_FILTER_WARNING_ALL'); ?></option>
-                                            <option value="Yes">Yes</option>
-                                            <option value="No">No</option>
                                         </select>
                                     </div>
                                     
