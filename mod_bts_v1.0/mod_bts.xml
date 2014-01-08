@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension
+	type="module"
+	version="3.1"
+	client="administrator">
+	<name>VNP1 BTS NodeB Menu</name>
+	<author>Chuyen Trung Tran</author>
+	<creationDate>2013-12-22</creationDate>
+	<copyright>Copyright (C) 2013. All rights reserved.</copyright>
+	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+	<authorEmail>chuyentt@gmail.com</authorEmail>
+	<authorUrl>http://www.geomatics.vn</authorUrl>
+	<version>1.0.0</version>
+	<description>MOD_BTS_XML_DESCRIPTION</description>
+	<files>
+		<filename module="mod_bts">mod_bts.php</filename>
+		<filename>index.html</filename>
+		<folder>tmpl</folder>
+	</files>
+	<languages>
+		<language tag="en-GB">en-GB.mod_bts.ini</language>
+		<language tag="en-GB">en-GB.mod_bts.sys.ini</language>
+		<language tag="vi-VN">vi-VN.mod_bts.ini</language>
+		<language tag="vi-VN">vi-VN.mod_bts.sys.ini</language>
+	</languages>
+	<config>
+		<fields name="params">
+			
+			<fieldset name="advanced">
+				<field
+					name="layout"
+					type="modulelayout"
+					label="JFIELD_ALT_LAYOUT_LABEL"
+					description="JFIELD_ALT_MODULE_LAYOUT_DESC" />
+
+				<field
+					name="moduleclass_sfx"
+					type="textarea" rows="3"
+					label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"
+					description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC" />
+
+				<field
+					name="cache"
+					type="list"
+					default="0"
+					label="COM_MODULES_FIELD_CACHING_LABEL"
+					description="COM_MODULES_FIELD_CACHING_DESC">
+					<option
+						value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
+				</field>
+				<field
+					name="automatic_title"
+					type="radio"
+					class="btn-group btn-group-yesno"
+					default="0"
+					label="COM_MODULES_FIELD_AUTOMATIC_TITLE_LABEL"
+					description="COM_MODULES_FIELD_AUTOMATIC_TITLE_DESC">
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
+			</fieldset>
+		</fields>
+	</config>
+</extension>
