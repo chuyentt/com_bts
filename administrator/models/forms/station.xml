@@ -19,7 +19,7 @@
                 
             filter="string"
             size="20"
-            maxlength="20" /> 
+            maxlength="50" /> 
 
        <field name="network" type="text"
                 
