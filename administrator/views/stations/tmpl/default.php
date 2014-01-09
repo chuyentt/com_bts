@@ -211,8 +211,7 @@ if (!empty($this->extra_sidebar)) {
 					<?php echo $item->address; ?>
 				</td>
 				<td>
-
-					<?php echo BtsHelper::getWarningLevel($item->warning_level); ?>
+					<?php echo BtsHelper::getWarningLevel(($item->warning_level===null) ? '' : $item->warning_level); ?>
 				</td>
 				<td>
 
