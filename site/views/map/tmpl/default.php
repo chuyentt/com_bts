@@ -81,11 +81,11 @@ jQuery( document ).ready(function( $ ) {
 
 	var center = new google.maps.LatLng(21.029071,105.855761);
 	var data = <?php echo json_encode($this->items); ?>;
-	var warningLevelText = <?php echo json_encode(BtsHelper::getWarningLevel()); ?>;
+	var warningLevelText = <?php echo json_encode(BtsHelper::getWarningLevel(null)); ?>;
 	var iconWarningStates = <?php echo json_encode($iconWarningStates); ?>;
 	var addressData = [];
 	$.each( data, function(i, markerData) {
-		addressData.push({label: markerData.bts_name+' '+markerData.address, value: markerData.bts_name});
+		addressData.push({label: markerData.bts_name+' '+markerData.network+' '+markerData.address, value: markerData.bts_name});
 	});
 	var bdcData = [];
 	$.each( data, function(i, markerData) {
