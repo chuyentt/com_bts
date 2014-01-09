@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS `#__bts_station` (
 `checked_out` INT(11)  NOT NULL ,
 `checked_out_time` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
 `created_by` INT(11)  NOT NULL ,
-`bts_name` VARCHAR(20)  NOT NULL ,
+`bts_name` VARCHAR(50)  NOT NULL ,
 `network` VARCHAR(20)  NOT NULL ,
 `address` VARCHAR(255)  NOT NULL ,
 `latitude` DECIMAL(10, 6) NOT NULL ,
