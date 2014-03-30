@@ -1,0 +1,136 @@
+.t3-copyright-poweredby {
+  padding-top: 1px !important;
+  padding-bottom: 1px !important;
+}
+
+/*Increase the width of JA Beranis on desktop view with retina display*/
+/*
+@media only screen and (-moz-min-deviice-pixel-ratio: 2),
+only screen and (-webkit-min-device-pixel-ratio: 2),
+only screen and (min-device-pixel-ratio: 2) {
+*/
+/*
+@media (min-width: 1200px) {
+  .container,
+  .navbar-static-top .container,
+  .navbar-fixed-top .container,
+  .navbar-fixed-bottom .container {
+    width: 100%; 	/* 760px; */
+/*  }
+  .t3-header.container, .t3-mainbody {
+    padding-top: 5px !important;
+  }
+  .span12 {
+    width: 95.4%;	/* 760px; */
+/*  }
+  .span11 {
+    width: 80;		/* 695px; */
+/*  }
+  .span10 {
+    width: 80%;		/* 630px; */
+/*  }
+  .span9 {
+    width: 565px;
+  }
+  .span8 {
+    width: 500px;
+  }
+  .span7 {
+    width: 435px;
+  }
+  .span6 {
+    width: 370px;
+  }
+  .span5 {
+    width: 305px;
+  }
+  .span4 {
+    width: 240px;
+  }
+  .span3 {
+    width: 175px;
+  }
+  .span2 {
+    width: 150px;
+  }
+  .span1 {
+    width: 45px;
+  }
+}
+*/
+
+html.com_users.view-login {
+	body {
+		background-image:none;
+		background-color:#01A3D4
+	}
+	#t3-mainnav {
+		display:none;
+	}
+	.logo {
+		float:none;
+		width:100%;
+	}
+	.logo-image h1, .logo-image .site-slogan {
+		text-align:center;
+		margin:10px 0;
+		font-size:20px;
+		font-weight:bold;
+	}
+	.container {
+		box-shadow: none;
+		background:none;
+	}
+	.login-wrap {
+		width:300px;
+		padding:15px;
+		margin:0 auto;
+		background:#F5F5F5;
+		-moz-border-radius: 5px;
+		-webkit-border-radius: 5px;
+		border-radius: 5px;
+		.login {
+			background:url(../images/logo-big.png) 50% 0 no-repeat;
+			padding-top:75px;
+		}
+		.form-horizontal {
+			border-top:1px solid #ddd;
+		}
+		.form-horizontal .control-label {
+			float:none;
+			width:auto;
+			text-align:left;
+		}
+		.form-horizontal .controls {
+			float:none;
+			margin:0;
+			input {
+				width:95%;
+			}
+		}
+		.well {
+			background:none;
+			border:none;
+			box-shadow:none;
+		}
+	}
+	.t3-copyright {
+		.container {
+			border-bottom:none;
+		}
+		.t3-copyright-poweredby {
+			border-top:none;
+			.copyright {
+				float:none;
+				width:auto;
+				text-align:center;
+			}
+			small {
+				color:#eee;
+				text-align:center;
+			}
+		}
+		
+	}
+	
+}
