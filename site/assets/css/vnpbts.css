@@ -129,3 +129,9 @@
 #tblWarningList select {
 	width:100px;
 }
+
+#directions {
+	height:130px;
+	overflow-y:auto;
+	border-bottom:1px solid #D83500;
+}

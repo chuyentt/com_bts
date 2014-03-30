@@ -224,13 +224,15 @@ jQuery( document ).ready(function( $ ) {
 		
 		$('#btn_show_way').on('click', function() {
 			if (point1 != '' && point2 != '') {
-				$('#map_canvas').gmap('displayDirections', { 'origin': point1.position, 'destination': point2.position, 'travelMode': google.maps.DirectionsTravelMode.DRIVING }, function(success, result) {
-					self.openInfoWindow({
-						content:  point1.bts_address
-					}, point1);
-					self.openInfoWindow({
-						content:  point2.bts_address
-					}, point2);
+				$('#map_canvas').gmap('displayDirections', { 'origin': point1.position, 'destination': point2.position, 'travelMode': $('#map_way_type').val() }, { 'panel': document.getElementById('directions')} , function(success, result) {
+					// console.log('success',success); 
+					// console.log('result',result); 
+					// self.openInfoWindow({
+						// content:  point1.bts_address
+					// }, point1);
+					// self.openInfoWindow({
+						// content:  point2.bts_address
+					// }, point2);
 				});
 			}
 		});
@@ -731,14 +733,19 @@ jQuery( document ).ready(function( $ ) {
                         </div>
                         <div id="collapseTwo" class="accordion-body collapse">
                             <div class="accordion-inner">
-                                <form action="#" id="map_way" class="form-inline">
+                                <form action="#" id="map_way" class="form-inline clearfix">
                                     <?php echo JText::_('COM_BTS_TITLE_MAP_FIND_DIRECTION_FROM'); ?> <br/>
                                     <input type="text" name="w1" id="map_way_o" />
                                     <br/> <?php echo JText::_('COM_BTS_TITLE_MAP_FIND_DIRECTION_TO'); ?> <br/>
                                     <input type="text" name="w2" id="map_way_d" />
+									<br/> <?php echo JText::_('COM_BTS_TITLE_MAP_FIND_DIRECTION_TYPE'); ?> <br/>
+                                     <select name="type" id="map_way_type">
+										<option value="DRIVING" selected="selected"><?php echo JText::_('COM_BTS_TITLE_MAP_FIND_DIRECTION_TYPE_DRIVING'); ?></option>
+										<option value="WALKING"><?php echo JText::_('COM_BTS_TITLE_MAP_FIND_DIRECTION_TYPE_WALKING'); ?></option>
+									</select>
                                     <div class="pull-right"><input type="button" value="<?php echo JText::_('COM_BTS_TITLE_MAP_BTS_SEARCH'); ?>" class="btn btn-default" id="btn_show_way" /></div>
-                                    
                                 </form>
+								<div id="directions"></div>
                             </div>
                         </div>
                     </div>
